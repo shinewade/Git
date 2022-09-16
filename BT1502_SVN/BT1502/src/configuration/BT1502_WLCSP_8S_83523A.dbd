@@ -1,0 +1,2682 @@
+dutboard BT1502_WLCSP_8S_83523A {
+    sites = 8;
+
+
+
+//B8 --wuhan
+ signal DGT_RN {
+    site 1 {pogo = 82704;}
+    site 2 {pogo = 82708;}
+    site 3 {pogo = 82712;}
+    site 4 {pogo = 82716;}
+    site 5 {pogo = 82704;}
+    site 6 {pogo = 82708;}
+    site 7 {pogo = 82712;}
+    site 8 {pogo = 82716;}
+}
+
+
+//A9 wuhan
+ signal DGT_RP {
+    site 1 {pogo = 82702;}
+    site 2 {pogo = 82706;}
+    site 3 {pogo = 82710;}
+    site 4 {pogo = 82714;}
+    site 5 {pogo = 82702;}
+    site 6 {pogo = 82706;}
+    site 7 {pogo = 82710;}
+    site 8 {pogo = 82714;}
+                routing {
+            site 1 { K16_1 = 0; K16_2 = X; K16_3 = X; K16_4 = X; }
+            site 2 { K16_1 = X; K16_2 = 0; K16_3 = X; K16_4 = X; }
+            site 3 { K16_1 = X; K16_2 = X; K16_3 = 0; K16_4 = X; }
+            site 4 { K16_1 = X; K16_2 = X; K16_3 = X; K16_4 = 0; }
+            site 5 { K16_1 = 1; K16_2 = X; K16_3 = X; K16_4 = X; }
+            site 6 { K16_1 = X; K16_2 = 1; K16_3 = X; K16_4 = X; }
+            site 7 { K16_1 = X; K16_2 = X; K16_3 = 1; K16_4 = X; }
+            site 8 { K16_1 = X; K16_2 = X; K16_3 = X; K16_4 = 1; }
+        }
+}
+
+//C8 wuhan
+ signal DGT_LN {
+    site 1 {pogo = 42704;}
+    site 2 {pogo = 42708;}
+    site 3 {pogo = 42712;}
+    site 4 {pogo = 42716;}
+    site 5 {pogo = 42704;}
+    site 6 {pogo = 42708;}
+    site 7 {pogo = 42712;}
+    site 8 {pogo = 42716;}
+}
+
+//D8 wuhan
+ signal DGT_LP {
+    site 1 {pogo = 42702;}
+    site 2 {pogo = 42706;}
+    site 3 {pogo = 42710;}
+    site 4 {pogo = 42714;}
+    site 5 {pogo = 42702;}
+    site 6 {pogo = 42706;}
+    site 7 {pogo = 42710;}
+    site 8 {pogo = 42714;}
+            routing {
+            site 1 { K16_1 = 0; K16_2 = X; K16_3 = X; K16_4 = X; }
+            site 2 { K16_1 = X; K16_2 = 0; K16_3 = X; K16_4 = X; }
+            site 3 { K16_1 = X; K16_2 = X; K16_3 = 0; K16_4 = X; }
+            site 4 { K16_1 = X; K16_2 = X; K16_3 = X; K16_4 = 0; }
+            site 5 { K16_1 = 1; K16_2 = X; K16_3 = X; K16_4 = X; }
+            site 6 { K16_1 = X; K16_2 = 1; K16_3 = X; K16_4 = X; }
+            site 7 { K16_1 = X; K16_2 = X; K16_3 = 1; K16_4 = X; }
+            site 8 { K16_1 = X; K16_2 = X; K16_3 = X; K16_4 = 1; }
+        }
+}
+
+
+
+//A8 A11 B2 B11 G4 L7 wuhan
+ signal VCODEC {
+    site 1 {pogo = 42904;}
+    site 2 {pogo = 42908;}
+    site 3 {pogo = 42512;}
+    site 4 {pogo = 42516;}
+    site 5 {pogo = 42916;}
+    site 6 {pogo = 42912;}
+    site 7 {pogo = 42508;}
+    site 8 {pogo = 42504;}
+}
+
+//A5
+ @Disabled
+signal PSRAM200M_IO_DQS {
+    site 1 {pogo = 22314;}
+    site 2 {pogo = 42116;}
+    site 3 {pogo = 41104;}
+    site 4 {pogo = 20609;}
+    site 5 {pogo = 12704;}
+    site 6 {pogo = 12803;}
+    site 7 {pogo = 10715;}
+    site 8 {pogo = 20705;}
+}
+
+
+//A6
+ @Disabled
+signal PSRAM200M_IO_ADQ6 {
+    site 1 {pogo = 22416;}
+    site 2 {pogo = 42310;}
+    site 3 {pogo = 40915;}
+    site 4 {pogo = 21006;}
+    site 5 {pogo = 12515;}
+    site 6 {pogo = 12503;}
+    site 7 {pogo = 10612;}
+    site 8 {pogo = 20202;}
+}
+
+
+//A7
+ @Disabled
+signal PSRAM200M_IO_ADQ5 {
+    site 1 {pogo = 22310;}
+    site 2 {pogo = 42112;}
+    site 3 {pogo = 41108;}
+    site 4 {pogo = 20711;}
+    site 5 {pogo = 12701;}
+    site 6 {pogo = 12807;}
+    site 7 {pogo = 10611;}
+    site 8 {pogo = 20315;}
+}
+
+//A8
+ @Disabled
+signal PSRAM202M_TX_CLKP {
+    site 1 {pogo = 22413;}
+    site 2 {pogo = 42314;}
+    site 3 {pogo = 40914;}
+    site 4 {pogo = 21002;}
+    site 5 {pogo = 12614;}
+    site 6 {pogo = 12505;}
+    site 7 {pogo = 10614;}
+    site 8 {pogo = 20201;}
+}
+
+//A9
+ @Disabled
+signal PSRAM201M_TX_CLKN {
+    site 1 {pogo = 22415;}
+    site 2 {pogo = 42316;}
+    site 3 {pogo = 40916;}
+    site 4 {pogo = 21004;}
+    site 5 {pogo = 12616;}
+    site 6 {pogo = 12507;}
+    site 7 {pogo = 10616;}
+    site 8 {pogo = 20203;}
+}
+
+//A10
+ @Disabled
+signal PSRAM200M_IO_ADQ3 {
+    site 1 {pogo = 22215;}
+    site 2 {pogo = 42104;}
+    site 3 {pogo = 21613;}
+    site 4 {pogo = 21305;}
+    site 5 {pogo = 12813;}
+    site 6 {pogo = 12814;}
+    site 7 {pogo = 10706;}
+    site 8 {pogo = 20710;}
+}
+
+//A11
+ @Disabled
+signal PSRAM200M_IO_ADQ1 {
+    site 1 {pogo = 21710;}
+    site 2 {pogo = 41804;}
+    site 3 {pogo = 41213;}
+    site 4 {pogo = 21105;}
+    site 5 {pogo = 12606;}
+    site 6 {pogo = 12607;}
+    site 7 {pogo = 10608;}
+    site 8 {pogo = 20413;}
+}
+
+
+//A12
+ @Disabled
+signal ADC3 {
+    site 1 {pogo = 22208;}
+    site 2 {pogo = 42306;}
+    site 3 {pogo = 41308;}
+    site 4 {pogo = 21209;}
+    site 5 {pogo = 12604;}
+    site 6 {pogo = 12602;}
+    site 7 {pogo = 10216;}
+    site 8 {pogo = 20115;}
+}
+
+//A13
+ @Disabled
+signal PSRAM200M_TX_DM {
+    site 1 {pogo = 22313;}
+    site 2 {pogo = 42111;}
+    site 3 {pogo = 41103;}
+    site 4 {pogo = 20615;}
+    site 5 {pogo = 12601;}
+    site 6 {pogo = 12804;}
+    site 7 {pogo = 10710;}
+    site 8 {pogo = 20314;}
+}
+//E3 wuhan
+ signal POWKEY {
+    site 1 {pogo = 12512;}
+    site 2 {pogo = 11311;}
+    site 3 {pogo = 11302;}
+    site 4 {pogo = 10909;}
+    site 5 {pogo = 13106;}
+    site 6 {pogo = 11714;}
+    site 7 {pogo = 12403;}
+    site 8 {pogo = 12106;}
+
+}
+
+//B6 wuhan
+ signal VMIC2 {
+    site 1 {pogo = 12907;}
+    site 2 {pogo = 11116;}
+    site 3 {pogo = 11112;}
+    site 4 {pogo = 10304;}
+    site 5 {pogo = 11707;}
+    site 6 {pogo = 12307;}
+    site 7 {pogo = 12306;}
+    site 8 {pogo = 10301;}
+
+}
+//B6
+ @Disabled
+signal PSRAM200M_IO_ADQ7 {
+    site 1 {pogo = 22414;}
+    site 2 {pogo = 42312;}
+    site 3 {pogo = 40913;}
+    site 4 {pogo = 21008;}
+    site 5 {pogo = 12513;}
+    site 6 {pogo = 12501;}
+    site 7 {pogo = 10610;}
+    site 8 {pogo = 20204;}
+
+}
+//B7
+ @Disabled
+signal PSRAM200M_IO_ADQ4 {
+    site 1 {pogo = 22312;}
+    site 2 {pogo = 42114;}
+    site 3 {pogo = 41106;}
+    site 4 {pogo = 20712;}
+    site 5 {pogo = 12702;}
+    site 6 {pogo = 12805;}
+    site 7 {pogo = 10609;}
+    site 8 {pogo = 20316;}
+
+}
+//B10
+ @Disabled
+signal PSRAM200M_IO_ADQ2 {
+    site 1 {pogo = 22216;}
+    site 2 {pogo = 42102;}
+    site 3 {pogo = 21615;}
+    site 4 {pogo = 21304;}
+    site 5 {pogo = 12811;}
+    site 6 {pogo = 12816;}
+    site 7 {pogo = 10704;}
+    site 8 {pogo = 20709;}
+
+}
+//B11
+ @Disabled
+signal PSRAM200M_IO_ADQ0 {
+    site 1 {pogo = 21709;}
+    site 2 {pogo = 41801;}
+    site 3 {pogo = 41215;}
+    site 4 {pogo = 21107;}
+    site 5 {pogo = 12608;}
+    site 6 {pogo = 12605;}
+    site 7 {pogo = 10808;}
+    site 8 {pogo = 20415;}
+
+}
+//C4 wuhan
+ signal ADC0 {
+    site 1 {pogo = 13110;}
+    site 2 {pogo = 11211;}
+    site 3 {pogo = 11210;}
+    site 4 {pogo = 12104;}
+    site 5 {pogo = 12010;}
+    site 6 {pogo = 12011;}
+    site 7 {pogo = 12301;}
+    site 8 {pogo = 12302;}
+
+}
+
+
+//A2 C1 K11 L6 L9 L11 M10 wuhan
+ signal VANA {
+    site 1 {pogo = 42902;}
+    site 2 {pogo = 42906;}
+    site 3 {pogo = 42510;}
+    site 4 {pogo = 42514;}
+    site 5 {pogo = 42914;}
+    site 6 {pogo = 42910;}
+    site 7 {pogo = 42506;}
+    site 8 {pogo = 42502;}
+
+}
+
+//E4 wuhan
+ signal RESETN {
+    site 1 {pogo = 12908;}
+    site 2 {pogo = 11512;}
+    site 3 {pogo = 11109;}
+    site 4 {pogo = 10714;}
+    site 5 {pogo = 12204;}
+    site 6 {pogo = 12313;}
+    site 7 {pogo = 10214;}
+    site 8 {pogo = 10311;}
+
+}
+
+
+//C2
+ @Disabled
+signal GPIO_61 {
+    site 1 {pogo = 22209;}
+    site 2 {pogo = 42308;}
+    site 3 {pogo = 41316;}
+    site 4 {pogo = 21605;}
+    site 5 {pogo = 12903;}
+    site 6 {pogo = 11715;}
+    site 7 {pogo = 10205;}
+    site 8 {pogo = 20116;}
+
+}
+
+//C3
+ @Disabled
+signal GPIO_62 {
+    site 1 {pogo = 22307;}
+    site 2 {pogo = 41910;}
+    site 3 {pogo = 41610;}
+    site 4 {pogo = 21407;}
+    site 5 {pogo = 13002;}
+    site 6 {pogo = 12312;}
+    site 7 {pogo = 10407;}
+    site 8 {pogo = 20603;}
+
+}
+
+//A6
+ signal VMIC1 {
+    site 1 {pogo = 13103;}
+    site 2 {pogo = 11114;}
+    site 3 {pogo = 11110;}
+    site 4 {pogo = 10302;}
+    site 5 {pogo = 11708;}
+    site 6 {pogo = 12305;}
+    site 7 {pogo = 12308;}
+    site 8 {pogo = 10303;}
+
+}
+//C7
+ @Disabled
+signal GPIO_60 {
+    site 1 {pogo = 21716;}
+    site 2 {pogo = 41703;}
+    site 3 {pogo = 41508;}
+    site 4 {pogo = 21108;}
+    site 5 {pogo = 12506;}
+    site 6 {pogo = 11810;}
+    site 7 {pogo = 10303;}
+    site 8 {pogo = 20414;}
+
+}
+//C8
+ @Disabled
+signal GPIO_41 {
+    site 1 {pogo = 21715;}
+    site 2 {pogo = 41705;}
+    site 3 {pogo = 41506;}
+    site 4 {pogo = 21106;}
+    site 5 {pogo = 13102;}
+    site 6 {pogo = 12408;}
+    site 7 {pogo = 10806;}
+    site 8 {pogo = 20412;}
+
+}
+//C9
+ @Disabled
+signal PSRAM200M_TX_CEB {
+    site 1 {pogo = 22311;}
+    site 2 {pogo = 42210;}
+    site 3 {pogo = 41105;}
+    site 4 {pogo = 20616;}
+    site 5 {pogo = 12603;}
+    site 6 {pogo = 12806;}
+    site 7 {pogo = 10712;}
+    site 8 {pogo = 20312;}
+
+
+}
+
+//D4 wuhan
+ signal ADC2 {
+    site 1 {pogo = 13112;}
+    site 2 {pogo = 11605;}
+    site 3 {pogo = 11209;}
+    site 4 {pogo = 12410;}
+    site 5 {pogo = 12012;}
+    site 6 {pogo = 12009;}
+    site 7 {pogo = 12303;}
+    site 8 {pogo = 12304;}
+
+
+}
+
+//C13
+ @Disabled
+signal GPIO_66 {
+    site 1 {pogo = 22207;}
+    site 2 {pogo = 42304;}
+    site 3 {pogo = 41306;}
+    site 4 {pogo = 21211;}
+    site 5 {pogo = 11713;}
+    site 6 {pogo = 12211;}
+    site 7 {pogo = 10214;}
+    site 8 {pogo = 20113;}
+
+}
+
+//F3 wuhan
+ signal VCHG_R {
+    site 1 {pogo = 12911;}
+    site 2 {pogo = 11514;}
+    site 3 {pogo = 11507;}
+    site 4 {pogo = 10716;}
+    site 5 {pogo = 12310;}
+    site 6 {pogo = 10307;}
+    site 7 {pogo = 10209;}
+    site 8 {pogo = 10309;}
+
+}
+
+//A3 B1 E1 wuhan
+ signal VSYS {
+    site 1 {pogo = 22901;}
+    site 2 {pogo = 42905;}
+    site 3 {pogo = 42513;}
+    site 4 {pogo = 22509;}
+    site 5 {pogo = 22913;}
+    site 6 {pogo = 42909;}
+    site 7 {pogo = 42501;}
+    site 8 {pogo = 22505;}
+
+}
+
+//D1_G1
+ signal AWG_MIC1_P {
+    site 1 {pogo = 42701;}
+    site 2 {pogo = 42705;}
+    site 3 {pogo = 42709;}
+    site 4 {pogo = 42713;}
+    site 5 {pogo = 42701;}
+    site 6 {pogo = 42705;}
+    site 7 {pogo = 42709;}
+    site 8 {pogo = 42713;}
+            routing {
+            site 1 { K2_1 = 0; K2_2 = X; K2_3 = X; K2_4 = X;     }
+            site 2 { K2_1 = X; K2_2 = 0; K2_3 = X; K2_4 = X;     }
+            site 3 { K2_1 = X; K2_2 = X; K2_3 = 0; K2_4 = X;     }
+            site 4 { K2_1 = X; K2_2 = X; K2_3 = X; K2_4 = 0;     }
+            site 5 { K2_1 = 1; K2_2 = X; K2_3 = X; K2_4 = X;     }
+            site 6 { K2_1 = X; K2_2 = 1; K2_3 = X; K2_4 = X;     }
+            site 7 { K2_1 = X; K2_2 = X; K2_3 = 1; K2_4 = X;     }
+            site 8 { K2_1 = X; K2_2 = X; K2_3 = X; K2_4 = 1;     }
+        }
+
+}
+ signal AWG_MIC2_P {
+    site 1 {pogo = 82701;}
+    site 2 {pogo = 82705;}
+    site 3 {pogo = 82709;}
+    site 4 {pogo = 82713;}
+    site 5 {pogo = 82701;}
+    site 6 {pogo = 82705;}
+    site 7 {pogo = 82709;}
+    site 8 {pogo = 82713;}
+            routing {
+            site 1 {     K2_5 = 0; K2_6 = X; K2_7 =
+                    X; K2_8 = X; }
+            site 2 {     K2_5 = X; K2_6 = 0; K2_7 =
+                    X; K2_8 = X; }
+            site 3 {     K2_5 = X; K2_6 = X; K2_7 =
+                    0; K2_8 = X; }
+            site 4 {     K2_5 = X; K2_6 = X; K2_7 =
+                    X; K2_8 = 0; }
+            site 5 {     K2_5 = 1; K2_6 = X; K2_7 =
+                    X; K2_8 = X; }
+            site 6 {     K2_5 = X; K2_6 = 1; K2_7 =
+                    X; K2_8 = X; }
+            site 7 {     K2_5 = X; K2_6 = X; K2_7 =
+                    1; K2_8 = X; }
+            site 8 {     K2_5 = X; K2_6 = X; K2_7 =
+                    X; K2_8 = 1; }
+        }
+
+}
+ signal AWG_MIC2_N {
+    site 1 {pogo = 82703;}
+    site 2 {pogo = 82707;}
+    site 3 {pogo = 82711;}
+    site 4 {pogo = 82715;}
+    site 5 {pogo = 82703;}
+    site 6 {pogo = 82707;}
+    site 7 {pogo = 82711;}
+    site 8 {pogo = 82715;}
+
+}
+
+
+
+//D5
+ @Disabled
+signal DSI_CKP {
+    site 1 {pogo = 22101;}
+    site 2 {pogo = 42205;}
+    site 3 {pogo = 41313;}
+    site 4 {pogo = 21601;}
+    site 5 {pogo = 13010;}
+    site 6 {pogo = 11814;}
+    site 7 {pogo = 10201;}
+    site 8 {pogo = 20501;}
+
+}
+
+//D6
+ @Disabled
+signal DSI_CKN {
+    site 1 {pogo = 22103;}
+    site 2 {pogo = 42207;}
+    site 3 {pogo = 41315;}
+    site 4 {pogo = 21603;}
+    site 5 {pogo = 13012;}
+    site 6 {pogo = 11816;}
+    site 7 {pogo = 10203;}
+    site 8 {pogo = 20503;}
+
+}
+
+
+//D8
+ @Disabled
+signal GPIO_42 {
+    site 1 {pogo = 13207;}
+    site 2 {pogo = 11601;}
+    site 3 {pogo = 11201;}
+    site 4 {pogo = 10812;}
+    site 5 {pogo = 10407;}
+    site 6 {pogo = 10406;}
+    site 7 {pogo = 10410;}
+    site 8 {pogo = 10409;}
+
+}
+
+//D10 --
+ @Disabled
+signal ADC1 {
+    site 1 {pogo = 13203;}
+    site 2 {pogo = 11604;}
+    site 3 {pogo = 11204;}
+    site 4 {pogo = 10816;}
+    site 5 {pogo = 12412;}
+    site 6 {pogo = 10113;}
+    site 7 {pogo = 10414;}
+    site 8 {pogo = 10805;}
+
+}
+
+////R6  D11
+// signal VPA_3P3 {
+//    site 1 {pogo = 22114;}
+//    site 2 {pogo = 42408;}
+//    site 3 {pogo = 21511;}
+//    site 4 {pogo = 21113;}
+//    site 5 {pogo = 12001;}
+//    site 6 {pogo = 12812;}
+//    site 7 {pogo = 10702;}
+//    site 8 {pogo = 20802;}
+//
+//}
+
+//D12
+ @Disabled
+signal GPIO_47 {
+    site 1 {pogo = 13205;}
+    site 2 {pogo = 11602;}
+    site 3 {pogo = 11202;}
+    site 4 {pogo = 10814;}
+    site 5 {pogo = 10405;}
+    site 6 {pogo = 10408;}
+    site 7 {pogo = 10412;}
+    site 8 {pogo = 10807;}
+
+}
+
+//D13
+ @Disabled
+signal GPIO_67 {
+    site 1 {pogo = 22206;}
+    site 2 {pogo = 42302;}
+    site 3 {pogo = 41304;}
+    site 4 {pogo = 21213;}
+    site 5 {pogo = 11711;}
+    site 6 {pogo = 12213;}
+    site 7 {pogo = 10115;}
+    site 8 {pogo = 20111;}
+
+}
+
+//E1_F1
+ signal AWG_MIC1_N {
+    site 1 {pogo = 42703;}
+    site 2 {pogo = 42707;}
+    site 3 {pogo = 42711;}
+    site 4 {pogo = 42715;}
+    site 5 {pogo = 42703;}
+    site 6 {pogo = 42707;}
+    site 7 {pogo = 42711;}
+    site 8 {pogo = 42715;}
+
+}
+
+//E8 wuhan
+ signal VCM_CAP {
+    site 1 {pogo = 12508;}
+    site 2 {pogo = 11307;}
+    site 3 {pogo = 10914;}
+    site 4 {pogo = 10905;}
+    site 5 {pogo = 13214;}
+    site 6 {pogo = 11710;}
+    site 7 {pogo = 12014;}
+    site 8 {pogo = 12404;}
+
+}
+
+//G7 wuhan
+ signal FLASH0_CS {
+    site 1 {pogo = 13109;}
+    site 2 {pogo = 11606;}
+    site 3 {pogo = 11102;}
+    site 4 {pogo = 11104;}
+    site 5 {pogo = 11916;}
+    site 6 {pogo = 11909;}
+    site 7 {pogo = 10211;}
+    site 8 {pogo = 10708;}
+
+}
+
+//E6
+ @Disabled
+signal DSI_DP0 {
+    site 1 {pogo = 21909;}
+    site 2 {pogo = 41710;}
+    site 3 {pogo = 41601;}
+    site 4 {pogo = 20914;}
+    site 5 {pogo = 13114;}
+    site 6 {pogo = 11702;}
+    site 7 {pogo = 10102;}
+    site 8 {pogo = 20502;}
+
+}
+
+//E7
+ @Disabled
+signal DSI_DN0 {
+    site 1 {pogo = 21911;}
+    site 2 {pogo = 41712;}
+    site 3 {pogo = 41603;}
+    site 4 {pogo = 20916;}
+    site 5 {pogo = 13116;}
+    site 6 {pogo = 11704;}
+    site 7 {pogo = 10104;}
+    site 8 {pogo = 20504;}
+
+}
+//E9
+ @Disabled
+signal GPIO_44 {
+    site 1 {pogo = 12509;}
+    site 2 {pogo = 11308;}
+    site 3 {pogo = 10915;}
+    site 4 {pogo = 10906;}
+    site 5 {pogo = 13215;}
+    site 6 {pogo = 11711;}
+    site 7 {pogo = 12407;}
+    site 8 {pogo = 12406;}
+
+}
+//E10
+ @Disabled
+signal GPIO_45 {
+    site 1 {pogo = 13004;}
+    site 2 {pogo = 11404;}
+    site 3 {pogo = 11016;}
+    site 4 {pogo = 10610;}
+    site 5 {pogo = 13010;}
+    site 6 {pogo = 11809;}
+    site 7 {pogo = 12215;}
+    site 8 {pogo = 10205;}
+
+}
+//E11
+ @Disabled
+signal GPIO_46 {
+    site 1 {pogo = 12906;}
+    site 2 {pogo = 11510;}
+    site 3 {pogo = 11111;}
+    site 4 {pogo = 10712;}
+    site 5 {pogo = 12202;}
+    site 6 {pogo = 12315;}
+    site 7 {pogo = 10216;}
+    site 8 {pogo = 10313;}
+
+}
+
+//E12
+ @Disabled
+signal GPIO_65 {
+    site 1 {pogo = 21910;}
+    site 2 {pogo = 42008;}
+    site 3 {pogo = 41114;}
+    site 4 {pogo = 20907;}
+    site 5 {pogo = 11803;}
+    site 6 {pogo = 12206;}
+    site 7 {pogo = 10605;}
+    site 8 {pogo = 20104;}
+
+}
+
+//D1 G1 G10 wuhan
+ signal VCORE_0p8 {
+    site 1 {pogo = 22907;}
+    site 2 {pogo = 42903;}
+    site 3 {pogo = 42515;}
+    site 4 {pogo = 22515;}
+    site 5 {pogo = 22911;}
+    site 6 {pogo = 42915;}
+    site 7 {pogo = 42503;}
+    site 8 {pogo = 22507;}
+
+}
+//H7 wuhan
+ signal FLASH0_SO {
+    site 1 {pogo = 13113;}
+    site 2 {pogo = 11610;}
+    site 3 {pogo = 11103;}
+    site 4 {pogo = 11108;}
+    site 5 {pogo = 11912;}
+    site 6 {pogo = 11913;}
+    site 7 {pogo = 10111;}
+    site 8 {pogo = 10705;}
+
+}
+//J6 wuhan
+ signal FLASH0_WP {
+    site 1 {pogo = 13111;}
+    site 2 {pogo = 11608;}
+    site 3 {pogo = 11101;}
+    site 4 {pogo = 11106;}
+    site 5 {pogo = 11914;}
+    site 6 {pogo = 11911;}
+    site 7 {pogo = 10112;}
+    site 8 {pogo = 10706;}
+
+}
+//F6
+ @Disabled
+signal GPIO_40 {
+    site 1 {pogo = 22102;}
+    site 2 {pogo = 42204;}
+    site 3 {pogo = 41311;}
+    site 4 {pogo = 21602;}
+    site 5 {pogo = 13014;}
+    site 6 {pogo = 11812;}
+    site 7 {pogo = 10202;}
+    site 8 {pogo = 20505;}
+}
+//F7
+ @Disabled
+signal GPIO_63 {
+    site 1 {pogo = 22010;}
+    site 2 {pogo = 41713;}
+    site 3 {pogo = 41602;}
+    site 4 {pogo = 20915;}
+    site 5 {pogo = 13115;}
+    site 6 {pogo = 11706;}
+    site 7 {pogo = 10106;}
+    site 8 {pogo = 20506;}
+
+}
+//F8
+ @Disabled
+signal GPIO_43 {
+    site 1 {pogo = 13002;}
+    site 2 {pogo = 11402;}
+    site 3 {pogo = 11014;}
+    site 4 {pogo = 10109;}
+    site 5 {pogo = 12905;}
+    site 6 {pogo = 11811;}
+    site 7 {pogo = 12216;}
+    site 8 {pogo = 10207;}
+
+}
+//F9
+ @Disabled
+signal GPIO_64 {
+    site 1 {pogo = 22301;}
+    site 2 {pogo = 41916;}
+    site 3 {pogo = 41616;}
+    site 4 {pogo = 21401;}
+    site 5 {pogo = 13008;}
+    site 6 {pogo = 12315;}
+    site 7 {pogo = 10401;}
+    site 8 {pogo = 20604;}
+
+}
+//F11
+ @Disabled
+signal GPIO_51 {
+    site 1 {pogo = 21809;}
+    site 2 {pogo = 42006;}
+    site 3 {pogo = 41112;}
+    site 4 {pogo = 20906;}
+    site 5 {pogo = 11801;}
+    site 6 {pogo = 12204;}
+    site 7 {pogo = 10607;}
+    site 8 {pogo = 20102;}
+
+}
+//F2 wuhan
+ signal VBAT_SENSE {
+    site 1 {pogo = 13006;}
+    site 2 {pogo = 11406;}
+    site 3 {pogo = 11015;}
+    site 4 {pogo = 10612;}
+    site 5 {pogo = 13012;}
+    site 6 {pogo = 12207;}
+    site 7 {pogo = 12213;}
+    site 8 {pogo = 10201;}
+
+}
+//E2 wuhan
+ signal VIO {
+    site 1 {pogo = 22908;}
+    site 2 {pogo = 22904;}
+    site 3 {pogo = 22516;}
+    site 4 {pogo = 22512;}
+    site 5 {pogo = 22912;}
+    site 6 {pogo = 22916;}
+    site 7 {pogo = 22504;}
+    site 8 {pogo = 22508;}
+
+}
+//F14
+ @Disabled
+signal VMEM {
+    site 1 {pogo = 42904;}
+    site 2 {pogo = 42908;}
+    site 3 {pogo = 42512;}
+    site 4 {pogo = 42516;}
+    site 5 {pogo = 42916;}
+    site 6 {pogo = 42912;}
+    site 7 {pogo = 42508;}
+    site 8 {pogo = 42504;}
+
+}
+
+ @Disabled
+signal CAP_CHAN3 {
+    site 1 {pogo = 13007;}
+    site 2 {pogo = 11411;}
+    site 3 {pogo = 11002;}
+    site 4 {pogo = 11005;}
+    site 5 {pogo = 11701;}
+    site 6 {pogo = 11704;}
+    site 7 {pogo = 10107;}
+    site 8 {pogo = 10616;}
+
+}
+
+//F10 wuhan
+ signal CAP_CHAN4 {
+    site 1 {pogo = 13005;}
+    site 2 {pogo = 11409;}
+    site 3 {pogo = 11001;}
+    site 4 {pogo = 11007;}
+    site 5 {pogo = 11808;}
+    site 6 {pogo = 11703;}
+    site 7 {pogo = 10106;}
+    site 8 {pogo = 10614;}
+
+}
+ @Disabled
+signal CAP_CHAN5 {
+    site 1 {pogo = 13101;}
+    site 2 {pogo = 11413;}
+    site 3 {pogo = 11004;}
+    site 4 {pogo = 11003;}
+    site 5 {pogo = 11702;}
+    site 6 {pogo = 11705;}
+    site 7 {pogo = 10108;}
+    site 8 {pogo = 10615;}
+
+}
+
+//G8 wuhan
+ signal CAP_CHAN6 {
+    site 1 {pogo = 12507;}
+    site 2 {pogo = 11316;}
+    site 3 {pogo = 10903;}
+    site 4 {pogo = 10901;}
+    site 5 {pogo = 13209;}
+    site 6 {pogo = 11801;}
+    site 7 {pogo = 12114;}
+    site 8 {pogo = 12115;}
+
+}
+
+//H9 wuhan
+ signal CAP_CHAN7 {
+    site 1 {pogo = 12506;}
+    site 2 {pogo = 11416;}
+    site 3 {pogo = 10904;}
+    site 4 {pogo = 10902;}
+    site 5 {pogo = 13211;}
+    site 6 {pogo = 11805;}
+    site 7 {pogo = 12113;}
+    site 8 {pogo = 12116;}
+
+}
+//E11 wuhan
+ signal SAR_VREFP {
+    site 1 {pogo = 13003;}
+    site 2 {pogo = 11401;}
+    site 3 {pogo = 11012;}
+    site 4 {pogo = 10105;}
+    site 5 {pogo = 11810;}
+    site 6 {pogo = 11813;}
+    site 7 {pogo = 12214;}
+    site 8 {pogo = 12209;}
+
+}
+
+//D3 wuhan
+ signal LED1 {
+    site 1 {pogo = 12511;}
+    site 2 {pogo = 11310;}
+    site 3 {pogo = 11301;}
+    site 4 {pogo = 10908;}
+    site 5 {pogo = 13105;}
+    site 6 {pogo = 11713;}
+    site 7 {pogo = 12401;}
+    site 8 {pogo = 12105;}
+}
+
+//B9 wuhan
+ signal SENSOR_P {
+    site 1 {pogo = 13102;}
+    site 2 {pogo = 11506;}
+    site 3 {pogo = 11115;}
+    site 4 {pogo = 10606;}
+    site 5 {pogo = 12206;}
+    site 6 {pogo = 12309;}
+    site 7 {pogo = 10213;}
+    site 8 {pogo = 10314;}
+}
+
+ //C9 wuhan
+ signal SENSOR_N {
+    site 1 {pogo = 13104;}
+    site 2 {pogo = 11508;}
+    site 3 {pogo = 11113;}
+    site 4 {pogo = 10608;}
+    site 5 {pogo = 12208;}
+    site 6 {pogo = 12311;}
+    site 7 {pogo = 10215;}
+    site 8 {pogo = 10316;}
+}
+
+ //B3 wuhan
+ signal UART_COM {
+    site 1 {pogo = 12510;}
+    site 2 {pogo = 11309;}
+    site 3 {pogo = 10916;}
+    site 4 {pogo = 10907;}
+    site 5 {pogo = 13213;}
+    site 6 {pogo = 11712;}
+    site 7 {pogo = 12405;}
+    site 8 {pogo = 12408;}
+}
+
+//F11 wuhan
+ signal VOUT_1P5 {
+    site 1 {pogo = 13001;}
+    site 2 {pogo = 11403;}
+    site 3 {pogo = 11010;}
+    site 4 {pogo = 10104;}
+    site 5 {pogo = 11706;}
+    site 6 {pogo = 11815;}
+    site 7 {pogo = 12212;}
+    site 8 {pogo = 12211;}
+}
+//H8 wuhan
+ signal FLASH0_CLK {
+    site 1 {pogo = 13116;}
+    site 2 {pogo = 11611;}
+    site 3 {pogo = 11107;}
+    site 4 {pogo = 11207;}
+    site 5 {pogo = 12008;}
+    site 6 {pogo = 12006;}
+    site 7 {pogo = 10703;}
+    site 8 {pogo = 10702;}
+
+}
+//G6
+ @Disabled
+signal GPIO_25 {
+    site 1 {pogo = 22210;}
+    site 2 {pogo = 42105;}
+    site 3 {pogo = 21612;}
+    site 4 {pogo = 21301;}
+    site 5 {pogo = 13104;}
+    site 6 {pogo = 12002;}
+    site 7 {pogo = 12306;}
+    site 8 {pogo = 20804;}
+
+}
+//J2 wuhan
+ signal GPIO_13 {
+    site 1 {pogo = 12901;}
+    site 2 {pogo = 11410;}
+    site 3 {pogo = 11011;}
+    site 4 {pogo = 10611;}
+    site 5 {pogo = 13009;}
+    site 6 {pogo = 12102;}
+    site 7 {pogo = 10102;}
+    site 8 {pogo = 10202;}
+
+}
+//G8
+ @Disabled
+signal GPIO_56 {
+    site 1 {pogo = 21810;}
+    site 2 {pogo = 41704;}
+    site 3 {pogo = 41403;}
+    site 4 {pogo = 21005;}
+    site 5 {pogo = 12514;}
+    site 6 {pogo = 11914;}
+    site 7 {pogo = 10207;}
+    site 8 {pogo = 20403;}
+
+}
+//G9
+ @Disabled
+signal GPIO_55 {
+    site 1 {pogo = 22302;}
+    site 2 {pogo = 41915;}
+    site 3 {pogo = 41615;}
+    site 4 {pogo = 21402;}
+    site 5 {pogo = 12901;}
+    site 6 {pogo = 12313;}
+    site 7 {pogo = 10402;}
+    site 8 {pogo = 20606;}
+
+}
+//G10
+ @Disabled
+signal GPIO_53 {
+    site 1 {pogo = 21811;}
+    site 2 {pogo = 42004;}
+    site 3 {pogo = 41110;}
+    site 4 {pogo = 20905;}
+    site 5 {pogo = 11908;}
+    site 6 {pogo = 12202;}
+    site 7 {pogo = 10209;}
+    site 8 {pogo = 20308;}
+
+}
+//G12
+ @Disabled
+signal GPIO_50 {
+    site 1 {pogo = 22116;}
+    site 2 {pogo = 42107;}
+    site 3 {pogo = 21610;}
+    site 4 {pogo = 21109;}
+    site 5 {pogo = 13209;}
+    site 6 {pogo = 12307;}
+    site 7 {pogo = 10707;}
+    site 8 {pogo = 20807;}
+
+}
+//G13
+ @Disabled
+signal CLK32K_TO_EXT1 {
+    site 1 {pogo = 22111;}
+    site 2 {pogo = 42402;}
+    site 3 {pogo = 21516;}
+    site 4 {pogo = 21114;}
+    site 5 {pogo = 12007;}
+    site 6 {pogo = 12305;}
+    site 7 {pogo = 10705;}
+    site 8 {pogo = 20805;}
+
+}
+//G14
+ @Disabled
+signal CLK32K_TO_EXT2 {
+    site 1 {pogo = 22112;}
+    site 2 {pogo = 42404;}
+    site 3 {pogo = 21515;}
+    site 4 {pogo = 21116;}
+    site 5 {pogo = 12005;}
+    site 6 {pogo = 12301;}
+    site 7 {pogo = 10703;}
+    site 8 {pogo = 20803;}
+
+}
+
+//H4
+ @Disabled
+signal GPIO_83 {
+    site 1 {pogo = 22104;}
+    site 2 {pogo = 42203;}
+    site 3 {pogo = 41414;}
+    site 4 {pogo = 21503;}
+    site 5 {pogo = 13016;}
+    site 6 {pogo = 11815;}
+    site 7 {pogo = 10204;}
+    site 8 {pogo = 20507;}
+
+}
+//H10 wuhan
+ signal FLASH0_HOLD {
+    site 1 {pogo = 13114;}
+    site 2 {pogo = 11607;}
+    site 3 {pogo = 11206;}
+    site 4 {pogo = 11205;}
+    site 5 {pogo = 12003;}
+    site 6 {pogo = 12001;}
+    site 7 {pogo = 10701;}
+    site 8 {pogo = 10704;}
+
+}
+//H6
+ @Disabled
+signal GPIO_34 {
+    site 1 {pogo = 22012;}
+    site 2 {pogo = 41714;}
+    site 3 {pogo = 41606;}
+    site 4 {pogo = 21012;}
+    site 5 {pogo = 13113;}
+    site 6 {pogo = 11708;}
+    site 7 {pogo = 10108;}
+    site 8 {pogo = 20508;}
+
+}
+//K1 GPIO_22 wuhan
+ signal  I2C_SCL {
+    site 1 {pogo = 12515;}
+    site 2 {pogo = 11314;}
+    site 3 {pogo = 11305;}
+    site 4 {pogo = 10912;}
+    site 5 {pogo = 13212;}
+    site 6 {pogo = 11803;}
+    site 7 {pogo = 12112;}
+    site 8 {pogo = 12109;}
+
+}
+//H4 wuhan
+ signal GPIO_20 {
+    site 1 {pogo = 12909;}
+    site 2 {pogo = 11516;}
+    site 3 {pogo = 11505;}
+    site 4 {pogo = 10715;}
+    site 5 {pogo = 12201;}
+    site 6 {pogo = 12316;}
+    site 7 {pogo = 10212;}
+    site 8 {pogo = 10607;}
+
+}
+//H9
+ @Disabled
+signal GPIO_91 {
+    site 1 {pogo = 22115;}
+    site 2 {pogo = 42208;}
+    site 3 {pogo = 21509;}
+    site 4 {pogo = 21111;}
+    site 5 {pogo = 13211;}
+    site 6 {pogo = 12407;}
+    site 7 {pogo = 10412;}
+    site 8 {pogo = 20409;}
+
+}
+
+//H10
+ @Disabled
+signal GPIO_54 {
+    site 1 {pogo = 21813;}
+    site 2 {pogo = 42002;}
+    site 3 {pogo = 41013;}
+    site 4 {pogo = 20904;}
+    site 5 {pogo = 11906;}
+    site 6 {pogo = 12201;}
+    site 7 {pogo = 10211;}
+    site 8 {pogo = 20306;}
+
+}
+
+//H11
+ @Disabled
+signal GPIO_52 {
+    site 1 {pogo = 21713;}
+    site 2 {pogo = 41808;}
+    site 3 {pogo = 41507;}
+    site 4 {pogo = 21102;}
+    site 5 {pogo = 13101;}
+    site 6 {pogo = 12404;}
+    site 7 {pogo = 10802;}
+    site 8 {pogo = 20211;}
+
+}
+
+//G2
+ signal ADC_VREF {
+    site 1 {pogo = 12513;}
+    site 2 {pogo = 11312;}
+    site 3 {pogo = 11303;}
+    site 4 {pogo = 10910;}
+    site 5 {pogo = 13108;}
+    site 6 {pogo = 11715;}
+    site 7 {pogo = 12402;}
+    site 8 {pogo = 12107;}
+
+}
+
+//F1 G11 wuhan
+ signal VCORE_0p6 {
+    site 1 {pogo = 22905;}
+    site 2 {pogo = 42901;}
+    site 3 {pogo = 42509;}
+    site 4 {pogo = 22513;}
+    site 5 {pogo = 22909;}
+    site 6 {pogo = 42913;}
+    site 7 {pogo = 42505;}
+    site 8 {pogo = 22501;}
+
+}
+
+
+
+//J3
+ @Disabled
+signal GPIO_82 {
+    site 1 {pogo = 22105;}
+    site 2 {pogo = 42201;}
+    site 3 {pogo = 41416;}
+    site 4 {pogo = 21501;}
+    site 5 {pogo = 13015;}
+    site 6 {pogo = 11813;}
+    site 7 {pogo = 10206;}
+    site 8 {pogo = 20509;}
+
+}
+//J4
+ @Disabled
+signal GPIO_81 {
+    site 1 {pogo = 22213;}
+    site 2 {pogo = 42106;}
+    site 3 {pogo = 21611;}
+    site 4 {pogo = 21306;}
+    site 5 {pogo = 13214;}
+    site 6 {pogo = 12008;}
+    site 7 {pogo = 10305;}
+    site 8 {pogo = 10811;}
+
+}
+//J9 wuhan
+ signal FLASH0_SI {
+    site 1 {pogo = 13115;}
+    site 2 {pogo = 11609;}
+    site 3 {pogo = 11105;}
+    site 4 {pogo = 11208;}
+    site 5 {pogo = 11910;}
+    site 6 {pogo = 11915;}
+    site 7 {pogo = 10110;}
+    site 8 {pogo = 10707;}
+
+}
+
+//J6
+ @Disabled
+signal GPIO_31 {
+    site 1 {pogo = 22304;}
+    site 2 {pogo = 41913;}
+    site 3 {pogo = 41613;}
+    site 4 {pogo = 21404;}
+    site 5 {pogo = 12902;}
+    site 6 {pogo = 12311;}
+    site 7 {pogo = 10404;}
+    site 8 {pogo = 20608;}
+
+}
+
+//J7
+ @Disabled
+signal GPIO_24 {
+    site 1 {pogo = 22016;}
+    site 2 {pogo = 41702;}
+    site 3 {pogo = 41401;}
+    site 4 {pogo = 21007;}
+    site 5 {pogo = 12516;}
+    site 6 {pogo = 11916;}
+    site 7 {pogo = 10208;}
+    site 8 {pogo = 20401;}
+
+}
+//J3 wuhan
+ signal GPIO_21 {
+    site 1 {pogo = 12910;}
+    site 2 {pogo = 11515;}
+    site 3 {pogo = 11503;}
+    site 4 {pogo = 10713;}
+    site 5 {pogo = 12203;}
+    site 6 {pogo = 12314;}
+    site 7 {pogo = 10210;}
+    site 8 {pogo = 10605;}
+
+}
+//H2 wuhan
+ signal GPIO_12 {
+    site 1 {pogo = 13008;}
+    site 2 {pogo = 11408;}
+    site 3 {pogo = 11013;}
+    site 4 {pogo = 10613;}
+    site 5 {pogo = 13011;}
+    site 6 {pogo = 12101;}
+    site 7 {pogo = 10101;}
+    site 8 {pogo = 10203;}
+
+}
+
+//J1 wuhan
+ signal GPIO_11 {
+    site 1 {pogo = 12514;}
+    site 2 {pogo = 11313;}
+    site 3 {pogo = 11304;}
+    site 4 {pogo = 10911;}
+    site 5 {pogo = 13210;}
+    site 6 {pogo = 11807;}
+    site 7 {pogo = 12111;}
+    site 8 {pogo = 12108;}
+
+}
+//J11
+ @Disabled
+signal GPIO_57 {
+    site 1 {pogo = 21712;}
+    site 2 {pogo = 41806;}
+    site 3 {pogo = 41209;}
+    site 4 {pogo = 21101;}
+    site 5 {pogo = 13208;}
+    site 6 {pogo = 12402;}
+    site 7 {pogo = 10801;}
+    site 8 {pogo = 20213;}
+
+}
+//J13
+ @Disabled
+signal FLASH1_HOLD {
+    site 1 {pogo = 22008;}
+    site 2 {pogo = 41706;}
+    site 3 {pogo = 41402;}
+    site 4 {pogo = 20909;}
+    site 5 {pogo = 12512;}
+    site 6 {pogo = 11912;}
+    site 7 {pogo = 10304;}
+    site 8 {pogo = 20405;}
+
+}
+//J14
+ @Disabled
+signal FLASH1_SI {
+    site 1 {pogo = 21703;}
+    site 2 {pogo = 42009;}
+    site 3 {pogo = 41012;}
+    site 4 {pogo = 21205;}
+    site 5 {pogo = 13207;}
+    site 6 {pogo = 12010;}
+    site 7 {pogo = 10415;}
+    site 8 {pogo = 20406;}
+
+}
+
+//J15
+ @Disabled
+signal FLASH1_CLK {
+    site 1 {pogo = 22411;}
+    site 2 {pogo = 42315;}
+    site 3 {pogo = 40912;}
+    site 4 {pogo = 21001;}
+    site 5 {pogo = 12615;}
+    site 6 {pogo = 12509;}
+    site 7 {pogo = 10615;}
+    site 8 {pogo = 20205;}
+
+}
+//K4
+ @Disabled
+signal GPIO_80 {
+    site 1 {pogo = 22211;}
+    site 2 {pogo = 42108;}
+    site 3 {pogo = 21609;}
+    site 4 {pogo = 21307;}
+    site 5 {pogo = 13212;}
+    site 6 {pogo = 12006;}
+    site 7 {pogo = 10307;}
+    site 8 {pogo = 10708;}
+
+}
+//K5
+ signal GPIO_03 {
+    site 1 {pogo = 13015;}
+    site 2 {pogo = 10515;}
+    site 3 {pogo = 11908;}
+    site 4 {pogo = 10516;}
+    site 5 {pogo = 12007;}
+    site 6 {pogo = 10508;}
+    site 7 {pogo = 12004;}
+    site 8 {pogo = 10507;}
+
+}
+//k2 GPIO_23 wuhan
+ signal I2C_SDA {
+    site 1 {pogo = 12913;}
+    site 2 {pogo = 11513;}
+    site 3 {pogo = 11501;}
+    site 4 {pogo = 10711;}
+    site 5 {pogo = 12915;}
+    site 6 {pogo = 10305;}
+    site 7 {pogo = 10310;}
+    site 8 {pogo = 10601;}
+
+}
+//K9
+ @Disabled
+signal GPIO_36 {
+    site 1 {pogo = 22014;}
+    site 2 {pogo = 41716;}
+    site 3 {pogo = 41503;}
+    site 4 {pogo = 21014;}
+    site 5 {pogo = 13111;}
+    site 6 {pogo = 11710;}
+    site 7 {pogo = 10110;}
+    site 8 {pogo = 20510;}
+
+}
+//H3 wuhan
+ signal GPIO_10 {
+    site 1 {pogo = 13202;}
+    site 2 {pogo = 11614;}
+    site 3 {pogo = 11214;}
+    site 4 {pogo = 10815;}
+    site 5 {pogo = 12414;}
+    site 6 {pogo = 10114;}
+    site 7 {pogo = 10416;}
+    site 8 {pogo = 10803;}
+
+}
+//K11
+ @Disabled
+signal GPIO_90 {
+    site 1 {pogo = 21711;}
+    site 2 {pogo = 41802;}
+    site 3 {pogo = 41211;}
+    site 4 {pogo = 21103;}
+    site 5 {pogo = 13206;}
+    site 6 {pogo = 12401;}
+    site 7 {pogo = 10803;}
+    site 8 {pogo = 20215;}
+
+}
+//K13
+ @Disabled
+signal FLASH1_WP {
+    site 1 {pogo = 22309;}
+    site 2 {pogo = 42212;}
+    site 3 {pogo = 41201;}
+    site 4 {pogo = 20610;}
+    site 5 {pogo = 12502;}
+    site 6 {pogo = 12808;}
+    site 7 {pogo = 10709;}
+    site 8 {pogo = 20311;}
+
+}
+//K14
+ @Disabled
+signal FLASH1_SO {
+    site 1 {pogo = 22410;}
+    site 2 {pogo = 42216;}
+    site 3 {pogo = 41107;}
+    site 4 {pogo = 20614;}
+    site 5 {pogo = 13007;}
+    site 6 {pogo = 12705;}
+    site 7 {pogo = 10714;}
+    site 8 {pogo = 20310;}
+
+}
+//K16
+ @Disabled
+signal FLASH1_CS {
+    site 1 {pogo = 22316;}
+    site 2 {pogo = 42115;}
+    site 3 {pogo = 41102;}
+    site 4 {pogo = 20611;}
+    site 5 {pogo = 12706;}
+    site 6 {pogo = 12801;}
+    site 7 {pogo = 10713;}
+    site 8 {pogo = 20707;}
+
+}
+
+//K9 wuhan
+ signal GPIO_00 {
+    site 1 {pogo = 13014;}
+    site 2 {pogo = 10501;}
+    site 3 {pogo = 11902;}
+    site 4 {pogo = 10502;}
+    site 5 {pogo = 11905;}
+    site 6 {pogo = 10510;}
+    site 7 {pogo = 11901;}
+    site 8 {pogo = 10509;}
+
+}
+//J8 wuhan
+ signal GPIO_01 {
+    site 1 {pogo = 13016;}
+    site 2 {pogo = 10503;}
+    site 3 {pogo = 11904;}
+    site 4 {pogo = 10504;}
+    site 5 {pogo = 11907;}
+    site 6 {pogo = 10512;}
+    site 7 {pogo = 11903;}
+    site 8 {pogo = 10511;}
+
+}
+//J7 wuhan
+ signal GPIO_02 {
+    site 1 {pogo = 13013;}
+    site 2 {pogo = 10513;}
+    site 3 {pogo = 11906;}
+    site 4 {pogo = 10514;}
+    site 5 {pogo = 12005;}
+    site 6 {pogo = 10506;}
+    site 7 {pogo = 12002;}
+    site 8 {pogo = 10505;}
+
+}
+//L8
+ @Disabled
+signal GPIO_35 {
+    site 1 {pogo = 22106;}
+    site 2 {pogo = 42202;}
+    site 3 {pogo = 41415;}
+    site 4 {pogo = 21502;}
+    site 5 {pogo = 13013;}
+    site 6 {pogo = 11811;}
+    site 7 {pogo = 10101;}
+    site 8 {pogo = 20511;}
+
+}
+//L9
+ @Disabled
+signal GPIO_26 {
+    site 1 {pogo = 22013;}
+    site 2 {pogo = 41715;}
+    site 3 {pogo = 41501;}
+    site 4 {pogo = 21016;}
+    site 5 {pogo = 13109;}
+    site 6 {pogo = 11712;}
+    site 7 {pogo = 10112;}
+    site 8 {pogo = 20512;}
+
+}
+//L10
+ @Disabled
+signal GPIO_75 {
+    site 1 {pogo = 22306;}
+    site 2 {pogo = 41911;}
+    site 3 {pogo = 41611;}
+    site 4 {pogo = 21406;}
+    site 5 {pogo = 13112;}
+    site 6 {pogo = 12309;}
+    site 7 {pogo = 10406;}
+    site 8 {pogo = 20514;}
+
+}
+//L12
+ @Disabled
+signal GPIO_73 {
+    site 1 {pogo = 21815;}
+    site 2 {pogo = 42001;}
+    site 3 {pogo = 41015;}
+    site 4 {pogo = 20903;}
+    site 5 {pogo = 11902;}
+    site 6 {pogo = 12205;}
+    site 7 {pogo = 10213;}
+    site 8 {pogo = 20304;}
+
+}
+//L13
+ @Disabled
+signal GPIO_95 {
+    site 1 {pogo = 22202;}
+    site 2 {pogo = 42303;}
+    site 3 {pogo = 41301;}
+    site 4 {pogo = 21216;}
+    site 5 {pogo = 11707;}
+    site 6 {pogo = 12216;}
+    site 7 {pogo = 10111;}
+    site 8 {pogo = 20107;}
+
+}
+//L14
+ @Disabled
+signal GPIO_94 {
+    site 1 {pogo = 21708;}
+    site 2 {pogo = 41803;}
+    site 3 {pogo = 41216;}
+    site 4 {pogo = 21208;}
+    site 5 {pogo = 13204;}
+    site 6 {pogo = 12403;}
+    site 7 {pogo = 10805;}
+    site 8 {pogo = 20216;}
+
+}
+//L15
+ @Disabled
+signal GPIO_92 {
+    site 1 {pogo = 22110;}
+    site 2 {pogo = 42403;}
+    site 3 {pogo = 21514;}
+    site 4 {pogo = 21112;}
+    site 5 {pogo = 13213;}
+    site 6 {pogo = 12405;}
+    site 7 {pogo = 10410;}
+    site 8 {pogo = 20411;}
+
+}
+//L16
+ @Disabled
+signal GPIO_93 {
+    site 1 {pogo = 22401;}
+    site 2 {pogo = 41815;}
+    site 3 {pogo = 41515;}
+    site 4 {pogo = 21507;}
+    site 5 {pogo = 11701;}
+    site 6 {pogo = 12413;}
+    site 7 {pogo = 10315;}
+    site 8 {pogo = 20706;}
+
+}
+//M7
+ signal GPIO_04 {
+    site 1 {pogo = 12914;}
+    site 2 {pogo = 11509;}
+    site 3 {pogo = 11504;}
+    site 4 {pogo = 10604;}
+    site 5 {pogo = 12205;}
+    site 6 {pogo = 12312;}
+    site 7 {pogo = 10308;}
+    site 8 {pogo = 10602;}
+
+}
+//M9
+ @Disabled
+signal GPIO_76 {
+    site 1 {pogo = 22107;}
+    site 2 {pogo = 42206;}
+    site 3 {pogo = 41413;}
+    site 4 {pogo = 21504;}
+    site 5 {pogo = 13011;}
+    site 6 {pogo = 11809;}
+    site 7 {pogo = 10103;}
+    site 8 {pogo = 20513;}
+
+}
+//M10
+ @Disabled
+signal GPIO_77 {
+    site 1 {pogo = 22308;}
+    site 2 {pogo = 41909;}
+    site 3 {pogo = 41609;}
+    site 4 {pogo = 21408;}
+    site 5 {pogo = 13110;}
+    site 6 {pogo = 12410;}
+    site 7 {pogo = 10408;}
+    site 8 {pogo = 20516;}
+
+}
+//M12
+ @Disabled
+signal GPIO_72 {
+    site 1 {pogo = 21816;}
+    site 2 {pogo = 42003;}
+    site 3 {pogo = 41016;}
+    site 4 {pogo = 20902;}
+    site 5 {pogo = 11901;}
+    site 6 {pogo = 12207;}
+    site 7 {pogo = 10215;}
+    site 8 {pogo = 20302;}
+
+}
+//M13
+ @Disabled
+signal GPIO_87 {
+    site 1 {pogo = 22201;}
+    site 2 {pogo = 42305;}
+    site 3 {pogo = 41303;}
+    site 4 {pogo = 21214;}
+    site 5 {pogo = 11705;}
+    site 6 {pogo = 12214;}
+    site 7 {pogo = 10109;}
+    site 8 {pogo = 20105;}
+
+}
+//M14
+ @Disabled
+signal GPIO_85 {
+    site 1 {pogo = 21707;}
+    site 2 {pogo = 41805;}
+    site 3 {pogo = 41214;}
+    site 4 {pogo = 21206;}
+    site 5 {pogo = 13202;}
+    site 6 {pogo = 12009;}
+    site 7 {pogo = 10807;}
+    site 8 {pogo = 20214;}
+
+}
+//M15
+ @Disabled
+signal GPIO_96 {
+    site 1 {pogo = 22109;}
+    site 2 {pogo = 42405;}
+    site 3 {pogo = 21512;}
+    site 4 {pogo = 21110;}
+    site 5 {pogo = 13215;}
+    site 6 {pogo = 11911;}
+    site 7 {pogo = 10308;}
+    site 8 {pogo = 20410;}
+
+}
+//M16
+ @Disabled
+signal GPIO_97 {
+    site 1 {pogo = 22403;}
+    site 2 {pogo = 41816;}
+    site 3 {pogo = 41516;}
+    site 4 {pogo = 21608;}
+    site 5 {pogo = 11804;}
+    site 6 {pogo = 12415;}
+    site 7 {pogo = 10316;}
+    site 8 {pogo = 20704;}
+
+}
+//K4 wuhan
+ signal GPIO_06 {
+    site 1 {pogo = 13204;}
+    site 2 {pogo = 11616;}
+    site 3 {pogo = 11216;}
+    site 4 {pogo = 10813;}
+    site 5 {pogo = 12416;}
+    site 6 {pogo = 10115;}
+    site 7 {pogo = 10415;}
+    site 8 {pogo = 10801;}
+
+}
+//N9
+ @Disabled
+signal GPIO_32 {
+    site 1 {pogo = 22011;}
+    site 2 {pogo = 41711;}
+    site 3 {pogo = 41502;}
+    site 4 {pogo = 21015;}
+    site 5 {pogo = 11907;}
+    site 6 {pogo = 11714;}
+    site 7 {pogo = 10114;}
+    site 8 {pogo = 20307;}
+
+}
+//N10
+ signal GPIO_14 {
+    site 1 {pogo = 12903;}
+    site 2 {pogo = 11415;}
+    site 3 {pogo = 11405;}
+    site 4 {pogo = 11008;}
+    site 5 {pogo = 11804;}
+    site 6 {pogo = 11814;}
+    site 7 {pogo = 12103;}
+    site 8 {pogo = 10208;}
+
+}
+//N11
+ @Disabled
+signal GPIO_74 {
+    site 1 {pogo = 21814;}
+    site 2 {pogo = 42005;}
+    site 3 {pogo = 41014;}
+    site 4 {pogo = 20901;}
+    site 5 {pogo = 11903;}
+    site 6 {pogo = 12302;}
+    site 7 {pogo = 10212;}
+    site 8 {pogo = 20301;}
+
+}
+//J4 wuhan
+ signal GPIO_15 {
+    site 1 {pogo = 13201;}
+    site 2 {pogo = 11612;}
+    site 3 {pogo = 11212;}
+    site 4 {pogo = 10810;}
+    site 5 {pogo = 12409;}
+    site 6 {pogo = 10404;}
+    site 7 {pogo = 10315;}
+    site 8 {pogo = 10411;}
+
+}
+//N13
+ @Disabled
+signal GPIO_27 {
+    site 1 {pogo = 22203;}
+    site 2 {pogo = 42307;}
+    site 3 {pogo = 41305;}
+    site 4 {pogo = 21212;}
+    site 5 {pogo = 11703;}
+    site 6 {pogo = 12212;}
+    site 7 {pogo = 10107;}
+    site 8 {pogo = 20103;}
+
+}
+//N14
+ @Disabled
+signal GPIO_84 {
+    site 1 {pogo = 21706;}
+    site 2 {pogo = 41807;}
+    site 3 {pogo = 41212;}
+    site 4 {pogo = 21204;}
+    site 5 {pogo = 13201;}
+    site 6 {pogo = 12011;}
+    site 7 {pogo = 10409;}
+    site 8 {pogo = 20212;}
+
+}
+//N16
+ @Disabled
+signal GPIO_86 {
+    site 1 {pogo = 22405;}
+    site 2 {pogo = 41814;}
+    site 3 {pogo = 41514;}
+    site 4 {pogo = 21606;}
+    site 5 {pogo = 11806;}
+    site 6 {pogo = 12416;}
+    site 7 {pogo = 10314;}
+    site 8 {pogo = 20702;}
+
+}
+//P8
+ signal GPIO_05 {
+    site 1 {pogo = 12516;}
+    site 2 {pogo = 11603;}
+    site 3 {pogo = 11203;}
+    site 4 {pogo = 10710;}
+    site 5 {pogo = 12411;}
+    site 6 {pogo = 10402;}
+    site 7 {pogo = 10116;}
+    site 8 {pogo = 10413;}
+
+}
+//P9
+ @Disabled
+signal GPIO_30 {
+    site 1 {pogo = 22009;}
+    site 2 {pogo = 41709;}
+    site 3 {pogo = 41504;}
+    site 4 {pogo = 21013;}
+    site 5 {pogo = 11905;}
+    site 6 {pogo = 11716;}
+    site 7 {pogo = 10116;}
+    site 8 {pogo = 20305;}
+
+}
+//K3 wuhan
+ signal GPIO_16 {
+    site 1 {pogo = 12902;}
+    site 2 {pogo = 11412;}
+    site 3 {pogo = 11009;}
+    site 4 {pogo = 10609;}
+    site 5 {pogo = 11802;}
+    site 6 {pogo = 11812;}
+    site 7 {pogo = 10103;}
+    site 8 {pogo = 10204;}
+
+}
+//P13
+ @Disabled
+signal GPIO_71 {
+    site 1 {pogo = 22205;}
+    site 2 {pogo = 42401;}
+    site 3 {pogo = 41307;}
+    site 4 {pogo = 21210;}
+    site 5 {pogo = 13009;}
+    site 6 {pogo = 12210;}
+    site 7 {pogo = 10105;}
+    site 8 {pogo = 20101;}
+
+}
+//P13
+ @Disabled
+signal GPIO_70 {
+    site 1 {pogo = 21705;}
+    site 2 {pogo = 41905;}
+    site 3 {pogo = 41210;}
+    site 4 {pogo = 21202;}
+    site 5 {pogo = 13203;}
+    site 6 {pogo = 12014;}
+    site 7 {pogo = 10411;}
+    site 8 {pogo = 20210;}
+
+}
+//P16
+ signal VUSB {
+    site 1 {pogo = 12912;}
+    site 2 {pogo = 11511;}
+    site 3 {pogo = 11502;}
+    site 4 {pogo = 10709;}
+    site 5 {pogo = 12916;}
+    site 6 {pogo = 10306;}
+    site 7 {pogo = 10312;}
+    site 8 {pogo = 10603;}
+
+}
+//A4 L8 wuhan
+ signal VPA_3P3 {
+    site 1 {pogo = 22906;}
+    site 2 {pogo = 22902;}
+    site 3 {pogo = 22514;}
+    site 4 {pogo = 22510;}
+    site 5 {pogo = 22910;}
+    site 6 {pogo = 22914;}
+    site 7 {pogo = 22502;}
+    site 8 {pogo = 22506;}
+
+}
+//R7
+ signal VPA_1P8 {
+    site 1 {pogo = 22903;}
+    site 2 {pogo = 42907;}
+    site 3 {pogo = 42511;}
+    site 4 {pogo = 22511;}
+    site 5 {pogo = 22915;}
+    site 6 {pogo = 42911;}
+    site 7 {pogo = 42507;}
+    site 8 {pogo = 22503;}
+
+}
+
+//M5 wuhan
+ signal GPIO_07 {
+    site 1 {pogo = 12904;}
+    site 2 {pogo = 11414;}
+    site 3 {pogo = 11407;}
+    site 4 {pogo = 11006;}
+    site 5 {pogo = 11806;}
+    site 6 {pogo = 11816;}
+    site 7 {pogo = 12210;}
+    site 8 {pogo = 10206;}
+
+}
+//R10
+ @Disabled
+signal GPIO_33 {
+    site 1 {pogo = 22015;}
+    site 2 {pogo = 41810;}
+    site 3 {pogo = 41510;}
+    site 4 {pogo = 21607;}
+    site 5 {pogo = 11807;}
+    site 6 {pogo = 12412;}
+    site 7 {pogo = 10310;}
+    site 8 {pogo = 20703;}
+
+}
+//R11
+ @Disabled
+signal GPIO_37 {
+    site 1 {pogo = 22407;}
+    site 2 {pogo = 41812;}
+    site 3 {pogo = 41512;}
+    site 4 {pogo = 21604;}
+    site 5 {pogo = 11805;}
+    site 6 {pogo = 12414;}
+    site 7 {pogo = 10312;}
+    site 8 {pogo = 20701;}
+
+}
+//R12
+ signal GPIO_17 {
+    site 1 {pogo = 13107;}
+    site 2 {pogo = 11315;}
+    site 3 {pogo = 11306;}
+    site 4 {pogo = 10913;}
+    site 5 {pogo = 13216;}
+    site 6 {pogo = 11709;}
+    site 7 {pogo = 11716;}
+    site 8 {pogo = 12110;}
+
+}
+//M2 wuhan
+ signal USB_DP {
+    site 1 {pogo = 13206;}
+    site 2 {pogo = 11615;}
+    site 3 {pogo = 11215;}
+    site 4 {pogo = 10809;}
+    site 5 {pogo = 12413;}
+    site 6 {pogo = 10401;}
+    site 7 {pogo = 10806;}
+    site 8 {pogo = 10802;}
+
+}
+//M1 wuhan
+ signal USB_DN {
+    site 1 {pogo = 13208;}
+    site 2 {pogo = 11613;}
+    site 3 {pogo = 11213;}
+    site 4 {pogo = 10811;}
+    site 5 {pogo = 12415;}
+    site 6 {pogo = 10403;}
+    site 7 {pogo = 10808;}
+    site 8 {pogo = 10804;}
+
+}
+
+//
+ signal DGT_IP {
+    site 1 {pogo = 22702;}
+    site 2 {pogo = 22710;}
+    site 3 {pogo = 22702;}
+    site 4 {pogo = 22710;}
+    site 5 {pogo = 22702;}
+    site 6 {pogo = 22710;}
+    site 7 {pogo = 22702;}
+    site 8 {pogo = 22710;}
+
+//routing {
+//        site 1 { K8_1_3 = 0; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+//        site 2 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 0; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+//        site 3 { K8_1_3 = 1; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+//        site 4 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 1; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+//        site 5 { K8_1_3 = X; K8_5_7 = 0; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+//        site 6 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 0; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+//        site 7 { K8_1_3 = X; K8_5_7 = 1; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+//        site 8 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 1; K9_1_3_5_7 = X;  K9_2_4_6_8 = 1; }
+//    }
+routing {
+        site 1 { K8_1_3 = 0; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+        site 2 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 0; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+        site 3 { K8_1_3 = 1; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+        site 4 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 1; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+        site 5 { K8_1_3 = X; K8_5_7 = 0; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+        site 6 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 0; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+        site 7 { K8_1_3 = X; K8_5_7 = 1; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+        site 8 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 1; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+    }
+}
+//
+ signal DGT_IN {
+    site 1 {pogo = 22704;}
+    site 2 {pogo = 22712;}
+    site 3 {pogo = 22704;}
+    site 4 {pogo = 22712;}
+    site 5 {pogo = 22704;}
+    site 6 {pogo = 22712;}
+    site 7 {pogo = 22704;}
+    site 8 {pogo = 22712;}
+
+}
+//
+ signal DGT_QP {
+    site 1 {pogo = 22706;}
+    site 2 {pogo = 22714;}
+    site 3 {pogo = 22706;}
+    site 4 {pogo = 22714;}
+    site 5 {pogo = 22706;}
+    site 6 {pogo = 22714;}
+    site 7 {pogo = 22706;}
+    site 8 {pogo = 22714;}
+
+//routing {
+//        site 1 { K8_1_3 = 0; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+//        site 2 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 0; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+//        site 3 { K8_1_3 = 1; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+//        site 4 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 1; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+//        site 5 { K8_1_3 = X; K8_5_7 = 0; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+//        site 6 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 0; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+//        site 7 { K8_1_3 = X; K8_5_7 = 1; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+//        site 8 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 1; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+//    }
+routing {
+        site 1 { K8_1_3 = 0; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+        site 2 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 0; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+        site 3 { K8_1_3 = 1; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 0; K9_2_4_6_8 = X; }
+        site 4 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = 1; K8_6_8 = X; K9_1_3_5_7 = X; K9_2_4_6_8 = 0; }
+        site 5 { K8_1_3 = X; K8_5_7 = 0; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+        site 6 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = 0; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+        site 7 { K8_1_3 = X; K8_5_7 = X; K8_2_4 = X; K8_6_8 = X; K9_1_3_5_7 = 1; K9_2_4_6_8 = X; }
+        site 8 { K8_1_3 = X; K8_5_7 = 1; K8_2_4 = X; K8_6_8 = 1; K9_1_3_5_7 = X; K9_2_4_6_8 = 1; }
+    }
+}
+
+
+signal DGT_QN {
+        site 7 { pogo = 22708; }
+        site 6 { pogo = 22716; }
+        site 8 { pogo = 22716; }
+        site 1 { pogo = 22708; }
+        site 3 { pogo = 22708; }
+        site 4 { pogo = 22716; }
+        site 2 { pogo = 22716; }
+        site 5 { pogo = 22708; }
+    }
+
+//
+ signal K1 {
+    site 1 {pogo = 511;}
+    site 2 {pogo = 406;}
+    site 3 {pogo = 311;}
+    site 4 {pogo = 213;}
+    site 5 {pogo = 511;}
+    site 6 {pogo = 406;}
+    site 7 {pogo = 311;}
+    site 8 {pogo = 213;}
+
+}
+
+
+
+//
+ @Disabled
+signal K2 {
+    site 1 {pogo = 514;}
+    site 2 {pogo = 403;}
+    site 3 {pogo = 312;}
+    site 4 {pogo = 211;}
+    site 5 {pogo = 515;}
+    site 6 {pogo = 404;}
+    site 7 {pogo = 310;}
+    site 8 {pogo = 215;}
+
+}
+
+
+@Disabled
+signal K3 {
+    site 1 {pogo = 408;}
+    site 2 {pogo = 403;}
+    site 3 {pogo = 316;}
+    site 4 {pogo = 307;}
+    site 5 {pogo = 111;}
+    site 6 {pogo = 204;}
+    site 7 {pogo = 203;}
+    site 8 {pogo = 202;}
+
+}
+
+
+
+//
+ signal K4 {
+    site 1 {pogo = 516;}
+    site 2 {pogo = 402;}
+    site 3 {pogo = 314;}
+    site 4 {pogo = 201;}
+    site 5 {pogo = 516;}
+    site 6 {pogo = 402;}
+    site 7 {pogo = 314;}
+    site 8 {pogo = 201;}
+
+}
+signal K5 {
+    site 1 {pogo = 513;}
+    site 2 {pogo = 401;}
+    site 3 {pogo = 316;}
+    site 4 {pogo = 203;}
+    site 5 {pogo = 513;}
+    site 6 {pogo = 401;}
+    site 7 {pogo = 316;}
+    site 8 {pogo = 203;}
+
+}
+
+
+
+//
+ @Disabled
+signal K6 {
+    site 1 {pogo = 414;}
+    site 2 {pogo = 413;}
+    site 3 {pogo = 304;}
+    site 4 {pogo = 301;}
+    site 5 {pogo = 102;}
+    site 6 {pogo = 511;}
+    site 7 {pogo = 603;}
+    site 8 {pogo = 215;}
+
+}
+@Disabled
+signal K30 {
+    site 1 {pogo = 801;}
+    site 2 {pogo = 802;}
+    site 3 {pogo = 313;}
+    site 4 {pogo = 707;}
+    site 5 {pogo = 514;}
+    site 6 {pogo = 515;}
+    site 7 {pogo = 606;}
+    site 8 {pogo = 604;}
+
+}
+
+
+
+//
+ @Disabled
+signal K33 {
+    site 1 {pogo = 411;}
+    site 2 {pogo = 416;}
+    site 3 {pogo = 303;}
+    site 4 {pogo = 601;}
+    site 5 {pogo = 101;}
+    site 6 {pogo = 104;}
+    site 7 {pogo = 216;}
+    site 8 {pogo = 211;}
+
+}
+@Disabled
+signal K34 {
+    site 1 {pogo = 411;}
+    site 2 {pogo = 416;}
+    site 3 {pogo = 303;}
+    site 4 {pogo = 601;}
+    site 5 {pogo = 101;}
+    site 6 {pogo = 104;}
+    site 7 {pogo = 216;}
+    site 8 {pogo = 211;}
+
+}
+
+
+
+//
+ @Disabled
+signal K35 {
+    site 1 {pogo = 805;}
+    site 2 {pogo = 803;}
+    site 3 {pogo = 706;}
+    site 4 {pogo = 715;}
+    site 5 {pogo = 513;}
+    site 6 {pogo = 516;}
+    site 7 {pogo = 605;}
+    site 8 {pogo = 602;}
+
+}
+@Disabled
+signal K36 {
+    site 1 {pogo = 805;}
+    site 2 {pogo = 803;}
+    site 3 {pogo = 706;}
+    site 4 {pogo = 715;}
+    site 5 {pogo = 513;}
+    site 6 {pogo = 516;}
+    site 7 {pogo = 605;}
+    site 8 {pogo = 602;}
+
+}
+
+
+
+//
+ @Disabled
+signal K37 {
+    site 1 {pogo = 409;}
+    site 2 {pogo = 405;}
+    site 3 {pogo = 312;}
+    site 4 {pogo = 308;}
+    site 5 {pogo = 106;}
+    site 6 {pogo = 112;}
+    site 7 {pogo = 205;}
+    site 8 {pogo = 210;}
+
+}
+@Disabled
+signal K38 {
+    site 1 {pogo = 409;}
+    site 2 {pogo = 405;}
+    site 3 {pogo = 312;}
+    site 4 {pogo = 308;}
+    site 5 {pogo = 106;}
+    site 6 {pogo = 112;}
+    site 7 {pogo = 205;}
+    site 8 {pogo = 210;}
+
+}
+
+
+
+//
+ signal K39 {
+    site 1 {pogo = 414;}
+    site 2 {pogo = 412;}
+    site 3 {pogo = 303;}
+    site 4 {pogo = 304;}
+    site 5 {pogo = 110;}
+    site 6 {pogo = 108;}
+    site 7 {pogo = 212;}
+    site 8 {pogo = 209;}
+
+}
+
+
+
+
+
+ signal K41 {
+    site 1 {pogo = 415;}
+    site 2 {pogo = 411;}
+    site 3 {pogo = 301;}
+    site 4 {pogo = 302;}
+    site 5 {pogo = 109;}
+    site 6 {pogo = 107;}
+    site 7 {pogo = 210;}
+    site 8 {pogo = 208;}
+
+}
+@Disabled
+signal K32 {
+    site 1 {pogo = 407;}
+    site 2 {pogo = 402;}
+    site 3 {pogo = 315;}
+    site 4 {pogo = 309;}
+    site 5 {pogo = 109;}
+    site 6 {pogo = 114;}
+    site 7 {pogo = 208;}
+    site 8 {pogo = 212;}
+
+}
+
+
+
+//
+ signal K31 {
+        site 6 { pogo = 105; }
+        site 1 { pogo = 413; }
+        site 4 { pogo = 305; }
+        site 8 { pogo = 214; }
+        site 7 { pogo = 216; }
+        site 2 { pogo = 416; }
+        site 3 { pogo = 313; }
+        site 5 { pogo = 106; }
+    }
+
+    signal K25 {
+        site 4 { pogo = 306; }
+        site 5 { pogo = 112; }
+        site 1 { pogo = 409; }
+        site 7 { pogo = 204; }
+        site 8 { pogo = 205; }
+        site 6 { pogo = 113; }
+        site 2 { pogo = 408; }
+        site 3 { pogo = 307; }
+    }
+
+    signal K26 {
+    site 1 {pogo = 410;}
+    site 2 {pogo = 407;}
+    site 3 {pogo = 309;}
+    site 4 {pogo = 308;}
+    site 5 {pogo = 114;}
+    site 6 {pogo = 111;}
+    site 7 {pogo = 206;}
+    site 8 {pogo = 207;}
+
+}
+    signal K27 {
+    site 1 {pogo = 410;}
+    site 2 {pogo = 407;}
+    site 3 {pogo = 309;}
+    site 4 {pogo = 308;}
+    site 5 {pogo = 114;}
+    site 6 {pogo = 111;}
+    site 7 {pogo = 206;}
+    site 8 {pogo = 207;}
+
+}
+signal K7 {
+    site 1 {pogo = 803;}
+    site 2 {pogo = 707;}
+    site 3 {pogo = 802;}
+    site 4 {pogo = 706;}
+    site 5 {pogo = 512;}
+    site 6 {pogo = 608;}
+    site 7 {pogo = 509;}
+    site 8 {pogo = 607;}
+
+}
+
+
+
+//
+ @Disabled
+signal K8 {
+        site 8 { pogo = 606; }
+        site 1 { pogo = 804; }
+        site 3 { pogo = 703; }
+        site 5 { pogo = 804; }
+        site 6 { pogo = 507; }
+        site 4 { pogo = 606; }
+        site 7 { pogo = 703; }
+        site 2 { pogo = 507; }
+    }
+
+    signal K10 {
+    site 1 {pogo = 803;}
+    site 2 {pogo = 707;}
+    site 3 {pogo = 802;}
+    site 4 {pogo = 706;}
+    site 5 {pogo = 512;}
+    site 6 {pogo = 608;}
+    site 7 {pogo = 509;}
+    site 8 {pogo = 607;}
+
+}
+signal K11 {
+    site 1 {pogo = 807;}
+    site 2 {pogo = 814;}
+    site 3 {pogo = 712;}
+    site 4 {pogo = 713;}
+    site 5 {pogo = 506;}
+    site 6 {pogo = 502;}
+    site 7 {pogo = 615;}
+    site 8 {pogo = 612;}
+
+}
+
+
+//
+ signal K13 {
+    site 1 {pogo = 812;}
+    site 2 {pogo = 815;}
+    site 3 {pogo = 708;}
+    site 4 {pogo = 714;}
+    site 5 {pogo = 504;}
+    site 6 {pogo = 503;}
+    site 7 {pogo = 611;}
+    site 8 {pogo = 616;}
+
+}
+signal K14 {
+    site 1 {pogo = 811;}
+    site 2 {pogo = 816;}
+    site 3 {pogo = 709;}
+    site 4 {pogo = 716;}
+    site 5 {pogo = 505;}
+    site 6 {pogo = 501;}
+    site 7 {pogo = 613;}
+    site 8 {pogo = 614;}
+
+}
+@Disabled
+signal K16 {
+    site 1 {pogo = 808;}
+    site 2 {pogo = 813;}
+    site 3 {pogo = 705;}
+    site 4 {pogo = 715;}
+    site 5 {pogo = 808;}
+    site 6 {pogo = 813;}
+    site 7 {pogo = 705;}
+    site 8 {pogo = 715;}
+}
+signal K17 {
+    site 1 {pogo = 807;}
+    site 2 {pogo = 814;}
+    site 3 {pogo = 712;}
+    site 4 {pogo = 713;}
+    site 5 {pogo = 506;}
+    site 6 {pogo = 502;}
+    site 7 {pogo = 615;}
+    site 8 {pogo = 612;}
+}
+signal K19 {
+    site 1 {pogo = 812;}
+    site 2 {pogo = 815;}
+    site 3 {pogo = 708;}
+    site 4 {pogo = 714;}
+    site 5 {pogo = 504;}
+    site 6 {pogo = 503;}
+    site 7 {pogo = 611;}
+    site 8 {pogo = 616;}
+}
+signal K20 {
+    site 1 {pogo = 811;}
+    site 2 {pogo = 816;}
+    site 3 {pogo = 709;}
+    site 4 {pogo = 716;}
+    site 5 {pogo = 505;}
+    site 6 {pogo = 501;}
+    site 7 {pogo = 613;}
+    site 8 {pogo = 614;}
+}
+
+
+
+//
+ @Disabled
+signal K18 {
+    site 1 {pogo = 406;}
+    site 2 {pogo = 406;}
+    site 3 {pogo = 311;}
+    site 4 {pogo = 311;}
+    site 5 {pogo = 107;}
+    site 6 {pogo = 107;}
+    site 7 {pogo = 206;}
+    site 8 {pogo = 206;}
+
+}
+@Disabled
+signal K22 {
+    site 1 {pogo = 816;}
+    site 2 {pogo = 816;}
+    site 3 {pogo = 702;}
+    site 4 {pogo = 702;}
+    site 5 {pogo = 505;}
+    site 6 {pogo = 505;}
+    site 7 {pogo = 611;}
+    site 8 {pogo = 611;}
+
+}
+
+  //M8 wuhan
+  signal BT_RF {
+    site 1 {pogo = 90101;}
+    site 2 {pogo = 90102;}
+    site 3 {pogo = 90103;}
+    site 4 {pogo = 90104;}
+    site 5 {pogo = 90105;}
+    site 6 {pogo = 90106;}
+    site 7 {pogo = 90107;}
+    site 8 {pogo = 90108;}
+}
+
+//
+ @Disabled
+signal K23 {
+    site 1 {pogo = 404;}
+    site 2 {pogo = 404;}
+    site 3 {pogo = 310;}
+    site 4 {pogo = 310;}
+    site 5 {pogo = 108;}
+    site 6 {pogo = 108;}
+    site 7 {pogo = 207;}
+    site 8 {pogo = 207;}
+
+}
+
+    utilityLine K8_1_3 {
+        pogo = 804;
+    }
+
+    utilityLine K8_5_7 {
+        pogo = 507;
+    }
+
+    utilityLine K8_2_4 {
+        pogo = 703;
+    }
+
+    utilityLine K8_6_8 {
+        pogo = 606;
+    }
+
+    utilityLine K9_1_3_5_7 {
+        pogo = 806;
+    }
+
+    utilityLine K9_2_4_6_8 {
+        pogo = 704;
+    }
+
+    utilityLine K2_1 {
+        pogo = 514;
+    }
+
+    utilityLine K2_2 {
+        pogo = 403;
+    }
+
+    utilityLine K2_3 {
+        pogo = 312;
+    }
+
+    utilityLine K2_4 {
+        pogo = 211;
+    }
+
+    utilityLine K2_5 {
+        pogo = 515;
+    }
+
+    utilityLine K2_6 {
+        pogo = 404;
+    }
+
+    utilityLine K2_7 {
+        pogo = 310;
+    }
+
+    utilityLine K2_8 {
+        pogo = 215;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    utilityLine K16_1 {
+        pogo = 808;
+    }
+
+    utilityLine K16_2 {
+        pogo = 813;
+    }
+
+    utilityLine K16_3 {
+        pogo = 705;
+    }
+
+    utilityLine K16_4 {
+        pogo = 715;
+    }
+
+
+
+
+    utilityControl{
+          SPI UT1,UT2,UT3,UT4,UT5,UT6,UT7,UT8{
+              sinp = 12016;
+              fram = 12015;
+              sclk = 12013;
+          }
+    }
+
+
+
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Demodulation type="uidefaultdisplay">
+    <ModulationStandard name="Bluetooth" facade="BlueToothEvmFacade">
+        <ParameterList type="Input">
+            <Parameter name="SamplesPerSymbol"/>
+            <Parameter name="ResultLength"/>
+            <Parameter name="ModFormat"/>
+            <Parameter name="SymbolRate"/>
+            <Parameter name="MeasurementFilter"/>
+            <Parameter name="ReferenceFilter"/>
+            <Parameter name="FilterAlpha"/>
+            <Parameter name="MirrorFrequencySpectrum"/>
+            <Parameter name="SyncMode"/>
+            <Parameter name="SyncWordBits"/>
+        </ParameterList>
+        <ParameterList type="Result">
+            <Parameter name="DevmRmsMax"/>
+            <Parameter name="DevmPeakMax"/>
+            <Parameter name="Devm99"/>
+            <Parameter name="MagnitudeErrorRms"/>
+            <Parameter name="PhaseErrorRms"/>
+            <Parameter name="FrequencyErrorRms"/>
+            <Parameter name="IQOffset"/>
+            <Parameter name="IQQuadError"/>
+            <Parameter name="IQGainImbalance"/>
+            <Parameter name="DemodulatedBits"/>
+            <Parameter name="InsufficientInputData"/>
+            <Parameter name="BurstFound"/>
+        </ParameterList>
+        <GraphList>
+            <Graph name="Constellation"/>
+            <Graph name="Spectrum"/>
+            <Graph name="PowerVsTime"/>
+        </GraphList>
+    </ModulationStandard>
+</Demodulation>

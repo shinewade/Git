@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Demodulation type="uidefaultdisplay">
+    <ModulationStandard name="5GNRDownlink" facade="FiveGNREvmFacade">
+        <ParameterList type="Input">
+            <Parameter name="5GNRDataBurstTestConfig"/>
+            <Parameter name="5GNRNumerology"/>
+            <Parameter name="DMRSMode"/>
+            <Parameter name="ResourceBlocksOffset"/>
+            <Parameter name="ResourceBlocksUsed"/>
+            <Parameter name="Bandwidth"/>
+            <Parameter name="5GNRDMRSPowerBoostdB"/>
+            <Parameter name="5GNRBurstMode"/>
+            <Parameter name="5GNRDMRSTypeAPos"/>
+            <Parameter name="5GNRDMRSAddPos"/>
+            <Parameter name="5GNRDMRSDuration"/>
+            <Parameter name="5GNRPUSHCMapping"/>
+            <Parameter name="5GNRDMRSConfiguration"/>
+            <Parameter name="5GNRDCPunctured"/>
+            <Parameter name="halfSlotDemodEnable"/>
+            <Parameter name="5GNRMeasIntInSlots"/>
+            <Parameter name="5GNRResLenInSlots"/>
+            <Parameter name="EqualizerTraining"/>
+            <Parameter name="dmrsSequenceVP"/>
+            <Parameter name="5GNRDLSyncSlot0"/>
+            <Parameter name="MirrorFrequencySpectrum"/>
+        </ParameterList>
+        <ParameterList type="Result">
+            <Parameter name="EvmRms"/>
+            <Parameter name="EvmPeak"/>
+            <Parameter name="EvmRmsData"/>
+            <Parameter name="5GNRRSEVM"/>
+            <Parameter name="FrequencyError"/>
+            <Parameter name="SyncRho"/>
+            <Parameter name="SymbolClockError"/>
+            <Parameter name="IQOffset"/>
+            <Parameter name="IQGainImbalance"/>
+            <Parameter name="IQQuadError"/>
+            <Parameter name="IQTimingSkew"/>
+            <Parameter name="5GNRDetCpLengthMode"/>
+        </ParameterList>
+        <GraphList>
+            <Graph name="Constellation"/>
+            <Graph name="Spectrum"/>
+            <Graph name="EvmVsOfdmSymbol"/>
+            <Graph name="EvmVsSubcarrier"/>
+        </GraphList>
+    </ModulationStandard>
+</Demodulation>

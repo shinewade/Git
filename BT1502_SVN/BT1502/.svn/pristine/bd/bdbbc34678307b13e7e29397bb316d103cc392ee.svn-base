@@ -1,0 +1,123 @@
+TestProgram History:
+/**************************************************V03****************************************************************/
+20220704 V03 Jerry, WuHan
+1. Add BT1502 WLCSP QA program
+2. Add Flash pin leakage test
+
+/**************************************************V03****************************************************************/
+20220705 V03 Jerry, WuHan
+1. Add BT1502 WLCSP ADC_VREF_TEST
+2. Update Flash pin leakage test
+
+
+/******************************************************************************************************************/
+20220707 V03 Jerry, WuHan
+1. Update RX Config
+
+
+
+/******************************************************************************************************************/
+202207011 V03  WuHan
+1. Verify RX Config;
+2. update LDO testmethod ;
+3. add CON_PROG;
+
+/******************************************************************************************************************/
+202207018 V04  WuHan
+1. uodate OS testmethod;
+2. update BES lib;
+3. add reset before chipid ;
+
+202207022 V04  WuHan
+1. update DCDC PowerOn
+
+202207025 V04  WuHan
+1. update QA FLOW
+
+202207025 V04  WuHan
+1. add Vcore0P6 test
+
+202207026 V04  WuHan
+1. add USB_TEST
+2. add VCORE/VANA/VCODEC branch
+3. add TESTTABLE FT02/QA02
+
+202207026 V04  WuHan
+1. add GPIO_TEST for BGA
+2. add more VCORE/VANA/VCODEC branch
+3. update testtable
+4. add rumrun test offline
+5. add ANC test offline
+6. update adda config offline
+7. update LO freq
+8. update flash1 ctrl test
+
+202208002 V04  WuHan
+1. change Vcore to 0.70V;Vana to 1.25V;Vcodec to 1.65V.
+2. update ANC test
+3. update RAMRUN test
+4. update TESTTABLE
+5. add TX acp test
+6. add TX GB test
+7. add TX ModChar test
+8. add new pattern
+
+
+202208002 V04  WuHan
+1. update os test
+2. add new prog for KX5D/8X5D
+
+202208002 V04  WuHan
+1. update LDO test
+
+
+202208002 V04  WuHan
+1. update TX test
+2. update testtable
+
+202208002 V04  WuHan
+1. update OS branch
+2. update QA FLOW
+3. add checklist
+
+202208003 V04  Yongxin
+1. Mask ignoreSite in TP BES2700IBP_8X5D_FT/QA
+2. QA Flash gpio test need run null ramrun bin file as FT flow?
+
+202208003 V05  Yongxin
+1. update TP version to V05
+
+202208003 V05  wuhan
+1. delete nullbin test in QA Flow
+2. rename CONTACT prog
+3  update owener to Yongxin
+
+
+202208003 V05  wuhan
+1. update ramrun test datalog;
+
+202208003 V05  wuhan
+1. verify ramrun test datalog;
+2. remove MIC2 test in QA prog;
+3. add VBAT ON HIGH spec in QA flow;
+4. update rx passive config //mask
+5. update atspeed clk config //mask
+6. update readall javacodes;
+
+202208003 V05  wuhan
+1. Mask ignoreSite in TP BES2700IBP_8X5D_FT/QA BES2700IBP_KX5D_FT/QA
+
+202208003 V05  wuhan
+1. relax QA current limits
+
+202208003 V05  wuhan
+1. update DFT sign off voltage
+
+20220809 V05  wuhan
+1. update rx passive test
+2. update tx GB test
+3. update new pattern
+4. update adda config
+5. verify DFT sign off voltage 0.8V
+6. update read PMU/ANA/RF address in init variables
+7. update testtable

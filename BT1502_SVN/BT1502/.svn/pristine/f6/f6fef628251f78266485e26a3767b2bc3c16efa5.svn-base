@@ -1,0 +1,412 @@
+package BT1502_pro_tml.DC;
+
+import com.advantest.itee.tmapi.protocolaccess.ProtocolAccess;
+
+import BT1502_pro_tml.Global.StaticFields;
+import besLib.pa.BesPA_I2C;
+import besLib.pa.BesPA_I2C.BesI2cAddrType;
+import besLib.pa.BesPA_I2C.I2cRegAddrBits;
+import xoc.dsa.DeviceSetupFactory;
+import xoc.dsa.DeviceSetupUncheckedException;
+import xoc.dsa.IDeviceSetup;
+import xoc.dta.TestMethod;
+import xoc.dta.annotations.In;
+import xoc.dta.measurement.IMeasurement;
+
+
+public class read_all_register extends TestMethod {
+
+    @In public String spec_measurement;
+    public IMeasurement measurement;
+    /**
+     * I2C type
+     */
+    @In boolean isRegAddr16Bits=false;
+
+    /**
+     * read Flag
+     */
+    @In boolean enable_PMUIntern=true;
+    @In boolean enable_PMU=false;
+    @In boolean enable_RF=false;
+    @In boolean enable_ANA=false;
+    @In boolean enable_CDC=false;
+    @In boolean enable_RC=false;
+    @In boolean enable_XTAL=false;
+    @In boolean enable_EMMC=false;
+    @In boolean enable_PCIE=false;
+    @In boolean enable_USB=false;
+    @In boolean enable_DIGITAL=false;
+
+    /**
+     * I2C address refer to labview cfg
+     */
+    //PMUIntern
+    @In public int[] startRegAddr_PMUIntern  ={0x00 };//page0, page1, page...
+    @In public int[] stopRegAddr_PMUIntern   ={0xec };//page0, page1, page...
+
+    //PMU
+    @In public int[] startRegAddr_PMU  ={0x00 ,0x101   };//page0, page1, page...
+    @In public int[] stopRegAddr_PMU   ={0xbf ,0x15f   };//page0, page1, page...
+
+    //RF
+    @In public int[] startRegAddr_RF  ={0x00 ,0x100,0x200,0x300  };//page0, page1, page...
+    @In public int[] stopRegAddr_RF   ={0xFF ,0x1FE,0x2FF,0x3D3  };//page0, page1, page...
+
+    //ANA
+    @In public int[] startRegAddr_ANA  ={0x00 ,0x160,0x260,0x360  };//page0, page1, page...
+    @In public int[] stopRegAddr_ANA   ={0xDF ,0x199,0x2B0,0x384  };//page0, page1, page...
+
+    //CDC
+    @In public int[] startRegAddr_CDC  ={0x00};//page0, page1, page...
+    @In public int[] stopRegAddr_CDC   ={0x84};//page0, page1, page...
+
+    //RC
+    @In public int[] startRegAddr_RC  ={0x00 ,0x160,0x260,0x360};//page0, page1, page...
+    @In public int[] stopRegAddr_RC   ={0xDF ,0x199,0x2B0,0x384};//page0, page1, page...
+
+    //XTAL
+    @In public int[] startRegAddr_XTAL  ={0x00 ,0x160,0x260,0x360};//page0, page1, page...
+    @In public int[] stopRegAddr_XTAL   ={0xDF ,0x199,0x2B0,0x384};//page0, page1, page...
+
+    //EMMC
+    @In public int[] startRegAddr_EMMC  ={0x00 ,0x160,0x260,0x360};//page0, page1, page...
+    @In public int[] stopRegAddr_EMMC   ={0xDF ,0x199,0x2B0,0x384};//page0, page1, page...
+
+    //PCIE
+    @In public int[] startRegAddr_PCIE  ={0x00 ,0x160,0x260,0x360};//page0, page1, page...
+    @In public int[] stopRegAddr_PCIE   ={0xDF ,0x199,0x2B0,0x384};//page0, page1, page...
+
+    //USB
+    @In public int[] startRegAddr_USB  ={0x00};//page0, page1, page...
+    @In public int[] stopRegAddr_USB   ={0x76};//page0, page1, page...
+
+
+    @Override
+    public void setup () {
+        IDeviceSetup ds1 =DeviceSetupFactory.createInstance(StaticFields.prog_name);
+        ds1.importSpec(spec_measurement);
+
+        BesPA_I2C i2c;
+        if(isRegAddr16Bits) {
+            i2c=new BesPA_I2C(ds1, measurement, I2cRegAddrBits.RegAddr_8Bits);
+        }
+        else {
+            i2c=new BesPA_I2C(ds1, measurement, I2cRegAddrBits.RegAddr_8Bits);
+        }
+        i2c.setSignals("I2C_SCL", "I2C_SDA");
+
+
+        //PMU_INTERN
+        if(enable_PMUIntern){
+            if(startRegAddr_PMUIntern.length!=stopRegAddr_PMUIntern.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_PMUIntern.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.PMUIntern, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_PMUIntern[page];i<=stopRegAddr_PMUIntern[page];i++) {
+                        i2c.read(BesI2cAddrType.PMUIntern, i, "read_PMUIntern_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //PMU
+        if(enable_PMU){
+            if(startRegAddr_PMU.length!=stopRegAddr_PMU.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_PMU.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.PMUIntern, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_PMU[page];i<=stopRegAddr_PMU[page];i++) {
+                        i2c.read(BesI2cAddrType.PMUIntern, i, "read_PMU_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //RF
+        if(enable_RF){
+            if(startRegAddr_RF.length!=stopRegAddr_RF.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_RF.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.RF, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_RF[page];i<=stopRegAddr_RF[page];i++) {
+                        i2c.read(BesI2cAddrType.RF, i, "read_RF_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //ANA
+        if(enable_ANA){
+            if(startRegAddr_ANA.length!=stopRegAddr_ANA.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_ANA.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.ANA, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_ANA[page];i<=stopRegAddr_ANA[page];i++) {
+                        i2c.read(BesI2cAddrType.ANA, i, "read_ANA_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+        //CDC
+        if(enable_CDC){
+            if(startRegAddr_CDC.length!=stopRegAddr_CDC.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_CDC.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.CDC, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_CDC[page];i<=stopRegAddr_CDC[page];i++) {
+                        i2c.read(BesI2cAddrType.CDC, i, "read_CDC_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //RC
+        if(enable_RC){
+            if(startRegAddr_RC.length!=stopRegAddr_RC.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_RC.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.RC, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_RC[page];i<=stopRegAddr_RC[page];i++) {
+                        i2c.read(BesI2cAddrType.RC, i, "read_RC_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //XTAL
+        if(enable_XTAL){
+            if(startRegAddr_XTAL.length!=stopRegAddr_XTAL.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_XTAL.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.XTAL, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_XTAL[page];i<=stopRegAddr_XTAL[page];i++) {
+                        i2c.read(BesI2cAddrType.XTAL, i, "read_XTAL_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //EMMC
+        if(enable_EMMC){
+            if(startRegAddr_EMMC.length!=stopRegAddr_EMMC.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_EMMC.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.EMMC, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_EMMC[page];i<=stopRegAddr_EMMC[page];i++) {
+                        i2c.read(BesI2cAddrType.EMMC, i, "read_EMMC_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //PCIE
+        if(enable_PCIE){
+            if(startRegAddr_PCIE.length!=stopRegAddr_PCIE.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_PCIE.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.PCIE, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_PCIE[page];i<=stopRegAddr_PCIE[page];i++) {
+                        i2c.read(BesI2cAddrType.PCIE, i, "read_PCIE_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //USB
+        if(enable_USB){
+            if(startRegAddr_USB.length!=stopRegAddr_USB.length) {
+                throw new DeviceSetupUncheckedException("Error, startRegAddr is not equal to stopAddr!");
+            }
+
+            i2c.transactionSequenceBegin();
+                for(int page=0; page<startRegAddr_USB.length;page++ ) {
+                    if(isRegAddr16Bits) {
+                        i2c.write(BesI2cAddrType.USB, 0x0, 0xa000+0x10*page);
+                    }
+                    for(int i=startRegAddr_USB[page];i<=stopRegAddr_USB[page];i++) {
+                        i2c.read(BesI2cAddrType.USB, i, "read_USB_Page_"+page+"_Addr_0x"+Long.toHexString(i));
+                    }
+                }
+            i2c.transactionSequenceEnd();
+        }
+
+        //DIGITAL
+        if(enable_DIGITAL){
+            i2c.transactionSequenceBegin();
+                i2c.read(BesI2cAddrType.DIGITAL, 0x40080004, "read_Digital_1");
+                i2c.read(BesI2cAddrType.DIGITAL, 0x400800a0, "read_Digital_2");
+            i2c.transactionSequenceEnd();
+        }
+
+        measurement.setSetups(ds1);
+    }
+
+    @Override
+    public void execute () {
+        measurement.execute();
+        com.advantest.itee.tmapi.protocolaccess.IProtocolInterfaceResults paResult_BES = ProtocolAccess.preserveResults(measurement);
+
+        String testSuiteName_Qualified=context.getTestSuiteName();
+        String testSuiteName=testSuiteName_Qualified.substring(1+testSuiteName_Qualified.lastIndexOf("."));
+        println("**********"+testSuiteName+"**********");
+
+        for(int site:context.getActiveSites()) {
+            println("** Site= "+site+" **");
+
+            //PMU_INTERN
+            if(enable_PMUIntern){
+                for(int page=0; page<startRegAddr_PMUIntern.length;page++ ) {
+                    for(int i=startRegAddr_PMUIntern[page];i<=stopRegAddr_PMUIntern[page];i++) {
+                        println("PMUIntern_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_PMUIntern_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //PMU
+            if(enable_PMU){
+                for(int page=0; page<startRegAddr_PMU.length;page++ ) {
+                    for(int i=startRegAddr_PMU[page];i<=stopRegAddr_PMU[page];i++) {
+                        println("PMU_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_PMU_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //RF
+            if(enable_RF){
+                for(int page=0; page<startRegAddr_RF.length;page++ ) {
+                    for(int i=startRegAddr_RF[page];i<=stopRegAddr_RF[page];i++) {
+                        println("RF_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_RF_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //ANA
+            if(enable_ANA){
+                for(int page=0; page<startRegAddr_ANA.length;page++ ) {
+                    for(int i=startRegAddr_ANA[page];i<=stopRegAddr_ANA[page];i++) {
+                        println("ANA_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_ANA_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //CDC
+            if(enable_CDC){
+                for(int page=0; page<startRegAddr_CDC.length;page++ ) {
+                    for(int i=startRegAddr_CDC[page];i<=stopRegAddr_CDC[page];i++) {
+                        println("CDC_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_CDC_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //RC
+            if(enable_RC){
+                for(int page=0; page<startRegAddr_RC.length;page++ ) {
+                    for(int i=startRegAddr_RC[page];i<=stopRegAddr_RC[page];i++) {
+                        println("RC_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_RC_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //XTAL
+            if(enable_XTAL){
+                for(int page=0; page<startRegAddr_XTAL.length;page++ ) {
+                    for(int i=startRegAddr_XTAL[page];i<=stopRegAddr_XTAL[page];i++) {
+                        println("XTAL_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_XTAL_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //EMMC
+            if(enable_EMMC){
+                for(int page=0; page<startRegAddr_EMMC.length;page++ ) {
+                    for(int i=startRegAddr_EMMC[page];i<=stopRegAddr_EMMC[page];i++) {
+                        println("EMMC_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_EMMC_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //PCIE
+            if(enable_PCIE){
+                for(int page=0; page<startRegAddr_PCIE.length;page++ ) {
+                    for(int i=startRegAddr_PCIE[page];i<=stopRegAddr_PCIE[page];i++) {
+                        println("PCIE_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_PCIE_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //USB
+            if(enable_USB){
+                for(int page=0; page<startRegAddr_USB.length;page++ ) {
+                    for(int i=startRegAddr_USB[page];i<=stopRegAddr_USB[page];i++) {
+                        println("USB_Page_"+page+" Addr= 0x"+Long.toHexString(i)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_USB_Page_"+page+"_Addr_0x"+Long.toHexString(i)).get(site)));
+                    }
+                }
+                println();
+            }
+
+            //DIGITAL
+            if(enable_DIGITAL){
+                    println("DIGITAL Addr= 0x"+Long.toHexString(0x40080004)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_Digital_1").get(site)));
+                    println("DIGITAL Addr= 0x"+Long.toHexString(0x400800a0)+" Data= 0x"+Long.toHexString(paResult_BES.getResult("read_Digital_2").get(site)));
+            }
+            println();
+        }
+
+
+    }
+}

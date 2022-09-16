@@ -1,0 +1,48 @@
+testprogram BES2600H_WLCSP_CONTACT {
+  dutboard = configuration.BT1502_WLCSP_8S_83523A;
+  utilityLinesPerBlock = 16;
+
+ // ignoredsites = 1,2,3,4,8;
+
+  // variables definition;
+  var DEV_NAME      = "WLCSP";        //Package type
+  var LB_NAME       = "WLCSP_8_SITE"; //Load Board type
+  var DEV_SSV       = "A";              //Bonding Vision
+  var DEV_SUB       = "A01";            //Device ID
+  var DEV_SUB_EXT   = "A";              //PID extend name
+  var DEV_VER       = "A";              //Wafer Vision
+  var DEV_VER_B     = "BT1502";
+  var EFFUSE_A1     = "N" ;             //Effuse address 1 written:Y/N
+  var FLASH_TYPE    = "GD64M4L_LQ";
+  var FLASH_TYPE_B  = "NA";
+  var FTQA          = "QA";             //FT or QA
+  var NFMI_PKG      = "TYPE1_RX";
+  var PMIC_NAME     = "BT1806";
+  var PMIC_VER      = "E";
+  var PSRAM_TYPE    = "AP32M";
+  var PSRAM_TYPE_B  = "AP64ML";
+  var VCORE_V       = "V075";
+  var VANA_V        = "V130";
+  var VCODEC_V      = "V170";
+  var VCORE_DFT__V  = "V080";
+  var CHARGER       = "N";
+  var MIC1          = "Y";
+  var MIC2          = "Y";
+  var MIC3          = "Y";
+  var MIC4          = "Y";
+  var MIC5          = "Y";
+  var MIC6          = "Y";
+  var PROG_NAME     = "BES2600H_WLCSP_QA";  //DSA path, modified per test program
+  var Is_FirstRun   =  false ;
+  var releaseTesterEnable =  true;
+
+  testflow PreBind {
+    flow = testflows.preBind ;
+  }
+  testflow PreRun {
+    flow = testflows.preRun;
+  }
+  testflow Main {
+    flow = testflows.CONTACT.BT1502_CONTACT;
+  }
+}

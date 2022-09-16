@@ -1,0 +1,225 @@
+package BT1502_pro_tml.Global;
+
+import xoc.dsa.DeviceSetupUncheckedException;
+import xoc.dta.TestMethod;
+
+public class Init_variables extends TestMethod {
+
+    @Override
+    public void setup() {
+
+        StaticFields.dev_name    = context.testProgram().variables().getString("DEV_NAME"    ).get();
+        StaticFields.dev_ssv     = context.testProgram().variables().getString("DEV_SSV"     ).get();
+        StaticFields.dev_sub     = context.testProgram().variables().getString("DEV_SUB"     ).get();
+        StaticFields.dev_sub_ext = context.testProgram().variables().getString("DEV_SUB_EXT" ).get();
+        StaticFields.dev_ver     = context.testProgram().variables().getString("DEV_VER"     ).get();
+        StaticFields.effuse_a1   = context.testProgram().variables().getString("EFFUSE_A1"   ).get();
+        StaticFields.flash_type  = context.testProgram().variables().getString("FLASH_TYPE"  ).get();
+        StaticFields.ftqa        = context.testProgram().variables().getString("FTQA"        ).get();
+        StaticFields.vcore_v     = context.testProgram().variables().getString("VCORE_V"     ).get();
+        StaticFields.vana_v      = context.testProgram().variables().getString("VANA_V"      ).get();
+        StaticFields.vcodec_v    = context.testProgram().variables().getString("VCODEC_V"    ).get();
+        StaticFields.lb_name     = context.testProgram().variables().getString("LB_NAME"     ).get();
+        StaticFields.prog_name   = context.testProgram().variables().getString("PROG_NAME"   ).get();
+        StaticFields.pmic_name   = context.testProgram().variables().getString("PMIC_NAME"   ).get();
+
+        StaticFields.vcore_DFT_v     = context.testProgram().variables().getString("VCORE_DFT__V"     ).get();
+
+
+        StaticFields.att_bt.set(10);
+        //VCORE
+        switch (StaticFields.vcore_v) {
+        case "V063":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x6060);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.63);
+            break;
+        case "V068":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x6565);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.68);
+            break;
+        case "V075":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x7777);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.75);
+            break;
+        case "V080":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x8484);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.8);
+            break;
+        case "V085":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x9292);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.85);
+            break;
+        case "V0746":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x7676);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.746);
+            break;
+        case "V0742":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x7575);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.742);
+            break;
+        case "V073":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x7272);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.73);
+            break;
+        case "V070":
+            StaticFields.regValue_DCBuck_Vcore_DFT.set(0x6A6A);
+            StaticFields.Vcore_DFT_DCBuck_Cal.set(0.70);
+            break;
+        default:
+            throw new DeviceSetupUncheckedException("vcore_v= "+StaticFields.vcore_v+" is not defined in test program! ");
+        }
+
+
+        //Vcore DFT
+        switch (StaticFields.vcore_DFT_v) {
+        case "V063":
+            StaticFields.regValue_DCBuck_Vcore.set(0x6060);
+            StaticFields.Vcore_DCBuck_Cal.set(0.63);
+            break;
+        case "V068":
+            StaticFields.regValue_DCBuck_Vcore.set(0x6565);
+            StaticFields.Vcore_DCBuck_Cal.set(0.68);
+            break;
+        case "V075":
+            StaticFields.regValue_DCBuck_Vcore.set(0x7777);
+            StaticFields.Vcore_DCBuck_Cal.set(0.75);
+            break;
+        case "V080":
+            StaticFields.regValue_DCBuck_Vcore.set(0x8484);
+            StaticFields.Vcore_DCBuck_Cal.set(0.8);
+            break;
+        case "V085":
+            StaticFields.regValue_DCBuck_Vcore.set(0x9292);
+            StaticFields.Vcore_DCBuck_Cal.set(0.85);
+            break;
+        case "V0746":
+            StaticFields.regValue_DCBuck_Vcore.set(0x7676);
+            StaticFields.Vcore_DCBuck_Cal.set(0.746);
+            break;
+        case "V0742":
+            StaticFields.regValue_DCBuck_Vcore.set(0x7575);
+            StaticFields.Vcore_DCBuck_Cal.set(0.742);
+            break;
+        case "V073":
+            StaticFields.regValue_DCBuck_Vcore.set(0x7272);
+            StaticFields.Vcore_DCBuck_Cal.set(0.73);
+            break;
+        case "V070":
+            StaticFields.regValue_DCBuck_Vcore.set(0x6A6A);
+            StaticFields.Vcore_DCBuck_Cal.set(0.70);
+            break;
+        default:
+            throw new DeviceSetupUncheckedException("vcore_v= "+StaticFields.vcore_v+" is not defined in test program! ");
+        }
+
+
+        //VANA
+        switch (StaticFields.vana_v) {
+        case "V130":
+            StaticFields.regValue_DCBuck_Vana.set(0x5c5c);
+            StaticFields.Vana_DCBuck_Cal.set(1.3);
+            break;
+        case "V1293":
+            StaticFields.regValue_DCBuck_Vana.set(0x5b5b);
+            StaticFields.Vana_DCBuck_Cal.set(1.293);
+            break;
+        case "V1286":
+            StaticFields.regValue_DCBuck_Vana.set(0x5a5a);
+            StaticFields.Vana_DCBuck_Cal.set(1.286);
+            break;
+        case "V128":
+            StaticFields.regValue_DCBuck_Vana.set(0x5959);
+            StaticFields.Vana_DCBuck_Cal.set(1.28);
+            break;
+        case "V125":
+            StaticFields.regValue_DCBuck_Vana.set(0x5555);
+            StaticFields.Vana_DCBuck_Cal.set(1.25);
+            break;
+        case "V121":
+            StaticFields.regValue_DCBuck_Vana.set(0x5050);
+            StaticFields.Vana_DCBuck_Cal.set(1.21);
+            break;
+
+        default:
+            throw new DeviceSetupUncheckedException("vana_v= "+StaticFields.vana_v+" is not defined in test program! ");
+        }
+
+        //VCODEC
+        switch (StaticFields.vcodec_v) {
+        case "V159":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x8383);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.59);
+            break;
+        case "V162":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x8787);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.62);
+            break;
+        case "V165":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x8B8B);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.65);
+            break;
+        case "V1693":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9090);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.693);
+            break;
+        case "V1686":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x8f8f);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.686);
+            break;
+        case "V168":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x8e8e);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.68);
+            break;
+        case "V170":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9191);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.7);
+            break;
+        case "V173":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9595);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.73);
+            break;
+        case "V176":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9999);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.76);
+            break;
+        case "V17075":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9292);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.7075);
+            break;
+        case "V1715":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9393);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.715);
+            break;
+        case "V180":
+            StaticFields.regValue_DCBuck_Vcodec.set(0x9F9F);
+            StaticFields.Vcodec_DCBuck_Cal.set(1.8);
+            break;
+
+        default:
+            throw new DeviceSetupUncheckedException("vcodec_v= "+StaticFields.vcodec_v+" is not defined in test program! ");
+        }
+
+    }
+
+    @Override
+    public void execute()
+    {
+        StaticFields.VSENSE_3P2V.set(0);
+        StaticFields.VSENSE_4P2V.set(0);
+
+        StaticFields.cal_Shift_Vcore.set(0);
+        StaticFields.cal_Shift_Vana.set(0);
+        StaticFields.cal_Shift_Vcodec.set(0);
+
+        StaticFields.BTTX_PWR_L.set(0);
+        StaticFields.BTTX_PWR_H.set(0);
+        StaticFields.BTTX_PWR_M.set(0);
+        StaticFields.BTTX_PWR_Marker_L.set(0);
+        StaticFields.BTTX_PWR_Marker_M.set(0);
+        StaticFields.BTTX_PWR_Marker_H.set(0);
+
+
+
+    }
+
+}

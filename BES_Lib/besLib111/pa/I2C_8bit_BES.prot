@@ -1,0 +1,868 @@
+protocol I2C_8bit_BES {
+
+    // signal roles
+    signalRole DATA {
+        idleSequence = "1";
+        mapping = drv [state0 = "0", state1 = "1"],
+                  rcv [state0 = "L", state1 = "H", capture = "C", ignore = "X"];
+    }
+    signalRole CLK {
+        idleSequence = "1";
+        mapping = drv [state0 = "0", state1 = "1"],
+                  rcv [state0 = "L", state1 = "H", capture = "C", ignore = "X"];
+    }
+
+
+
+    /********************* I2C_PMU_INTERN *********************** */
+    transaction PMU_INTERN_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b01001110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction PMU_INTERN_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b01001110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b01001111>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_PMU *********************** */
+    transaction PMU_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00101110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction PMU_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00101110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00101111>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_RF *********************** */
+    transaction RF_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+       define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00101100>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b1>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 3);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",1);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction RF_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00101100>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00101101>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b0011>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 3);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("1",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",3);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_ANA *********************** */
+    transaction ANA_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00101010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep1{};  stpRep1 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("1",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",1);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction ANA_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00101010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00101011>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b0011>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("1",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("1",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = <0b111>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+/********************* I2C_CDC *********************** */
+    transaction CDC_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00100100>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction CDC_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00100100>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00100101>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_RC *********************** */
+    transaction RC_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00111000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction RC_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00111000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00111001>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_XTAL *********************** */
+    transaction XTAL_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00110110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction XTAL_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00110110>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00110111>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_EMMC *********************** */
+    transaction EMMC_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00110010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction EMMC_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00110010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00110011>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_PCIE *********************** */
+    transaction PCIE_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b01000000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stpRep1{};  stpRep1 = repeat("0",2);
+            field drive stp{};      stp = <0b01>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",2);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction PCIE_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b01000000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b01000001>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",2);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_USB *********************** */
+    transaction USB_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+       define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command{};  command = <0b00110000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive data1{};    data1 = DATA[15..8];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive data2{};    data2 = DATA[7..0];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("1",1);
+            field drive clk{};      clk = repeat("0",36);
+            field drive stpRep1{};  stpRep1 = repeat("a",1);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+    }
+    transaction USB_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00110000>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr{};     addr = Address[7..0];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive sta2{};     sta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00110001>;
+            field drive ack3{};     ack3 = repeat("X",1);
+            field receive data1{}; //TDC Topic 0803550092
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack4{};     ack4 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive nack{};     nack = repeat("1",1);
+            field drive stp{};      stp = <0b0011>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("1",1);
+            field drive clk1{};     clk1 = repeat("0",18);
+            field drive sta2{};     sta2 = repeat("1",1);
+            field drive clk2{};     clk2 = repeat("0",27);
+            field drive stpa{};     stpa = repeat("a",1);
+            field drive stp{};      stp = repeat("1",3);
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+    }
+
+    /********************* I2C_DIGITAL *********************** */
+    transaction DIGITAL_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+       define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta{};      sta = repeat("b",1);
+            field drive command1{}; command1 = <0b00100010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr1{};    addr1 = Address[31..24];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive addr2{};    addr2 = Address[23..16];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive addr3{};    addr3 = Address[15..8];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive addr4{};    addr4 = Address[7..0];
+            field drive ack5{};     ack5 = repeat("X",1);
+            field drive rsta1{};    rsta1 = repeat("1",1);
+            field drive rsta2{};    rsta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00100010>;
+            field drive ack6{};     ack6 = repeat("X",1);
+            field drive data1{};    data1 = DATA[31..24];
+            field drive ack7{};     ack7 = repeat("X",1);
+            field drive data2{};    data2 = DATA[23..16];
+            field drive ack8{};     ack8 = repeat("X",1);
+            field drive data3{};    data3 = DATA[15..8];
+            field drive ack9{};     ack9 = repeat("X",1);
+            field drive data4{};    data4 = DATA[7..0];
+            field drive ack10{};    ack10 = repeat("X",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 3);
+            field drive clk{};      clk = repeat("0",45);
+            field drive stpRep1{};  stpRep1 = repeat("a",1);
+            field drive rsta{};     rsta = repeat("1", 1);
+            field drive clk2{};     clk2 = repeat("0",45);
+            field drive stpRep2{};  stpRep2 = repeat("a",1);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep3{};  stpRep3 = repeat("1",10);
+        }
+    }
+    transaction DIGITAL_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+        define DATA {
+            field drive idle{};     idle = repeat("1", 2);
+            field drive sta1{};     sta1 = repeat("b",1);
+            field drive command1{}; command1 = <0b00100010>;
+            field drive ack1{};     ack1 = repeat("X",1);
+            field drive addr1{};    addr1 = Address[31..24];
+            field drive ack2{};     ack2 = repeat("X",1);
+            field drive addr2{};    addr2 = Address[23..16];
+            field drive ack3{};     ack3 = repeat("X",1);
+            field drive addr3{};    addr3 = Address[15..8];
+            field drive ack4{};     ack4 = repeat("X",1);
+            field drive addr4{};    addr4 = Address[7..0];
+            field drive ack5{};     ack5 = repeat("X",1);
+            field drive rsta1{};    rsta1 = repeat("1",1);
+            field drive rsta2{};    rsta2 = repeat("b",1);
+            field drive command2{}; command2 = <0b00100011>;
+            field drive ack6{};     ack6 = repeat("X",1);
+            field receive data1{};
+            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+            field drive ack7{};     ack7 = repeat("0",1);
+            field receive data2{};
+            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+            field drive ack8{};     ack8 = repeat("0",1);
+            field receive data3{};
+            @Properties(captureMode = isOut(DATA)) data3 = DATA[16..23];
+            field drive ack9{};     ack9 = repeat("0",1);
+            field receive data4{};
+            @Properties(captureMode = isOut(DATA)) data4 = DATA[24..31];
+            field drive ack10{};    ack10 = repeat("1",1);
+            field drive stp{};      stp = <0b001>;
+            field drive stpRep2{};  stpRep2 = repeat("1",10);
+        }
+        define CLK {
+            field drive idle{};     idle = repeat("1", 3);
+            field drive clk{};      clk = repeat("0",45);
+            field drive stpRep1{};  stpRep1 = repeat("a",1);
+            field drive rsta{};     rsta = repeat("1", 1);
+            field drive clk2{};     clk2 = repeat("0",45);
+            field drive stpRep2{};  stpRep2 = repeat("a",1);
+            field drive stp{};      stp = <0b11>;
+            field drive stpRep3{};  stpRep3 = repeat("1",10);
+        }
+        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7] + DATA.data3[0 .. 7]+ DATA.data4[0 .. 7];
+
+    }
+
+//    /********************* I2C_WIFI *********************** */
+//    transaction WIFI_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+//       define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive command{};  command = <0b01000000>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive data1{};    data1 = DATA[15..8];
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field drive data2{};    data2 = DATA[7..0];
+//            field drive ack4{};     ack4 = repeat("X",1);
+//            field drive stpRep1{};  stpRep1 = repeat("0",2);
+//            field drive stp{};      stp = <0b01>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive clk{};      clk = repeat("0",36);
+//            field drive stpRep1{};  stpRep1 = repeat("a",2);
+//            field drive stp{};      stp = <0b11>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//    }
+//    transaction WIFI_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+//        define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive command1{}; command1 = <0b01000000>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive command2{}; command2 = <0b01000001>;
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field receive data1{}; //TDC Topic 0803550092
+//            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+//            field drive ack4{};     ack4 = repeat("0",1);
+//            field receive data2{};
+//            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+//            field drive nack{};     nack = repeat("1",1);
+//            field drive stp{};      stp = <0b001>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive clk1{};     clk1 = repeat("0",18);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive clk2{};     clk2 = repeat("0",27);
+//            field drive stpa{};     stpa = repeat("a",1);
+//            field drive stp{};      stp = repeat("1",2);
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+//    }
+//
+//    /********************* I2C_PSRAM0 *********************** */
+//    transaction PSRAM0_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+//       define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive command{};  command = <0b01000010>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive data1{};    data1 = DATA[15..8];
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field drive data2{};    data2 = DATA[7..0];
+//            field drive ack4{};     ack4 = repeat("X",1);
+//            field drive stpRep1{};  stpRep1 = repeat("0",2);
+//            field drive stp{};      stp = <0b01>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive clk{};      clk = repeat("0",36);
+//            field drive stpRep1{};  stpRep1 = repeat("a",2);
+//            field drive stp{};      stp = <0b11>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//    }
+//    transaction PSRAM0_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+//        define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive command1{}; command1 = <0b01000010>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive command2{}; command2 = <0b01000011>;
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field receive data1{}; //TDC Topic 0803550092
+//            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+//            field drive ack4{};     ack4 = repeat("0",1);
+//            field receive data2{};
+//            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+//            field drive nack{};     nack = repeat("1",1);
+//            field drive stp{};      stp = <0b001>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive clk1{};     clk1 = repeat("0",18);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive clk2{};     clk2 = repeat("0",27);
+//            field drive stpa{};     stpa = repeat("a",1);
+//            field drive stp{};      stp = repeat("1",2);
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+//    }
+//
+//    /********************* I2C_PSRAM1 *********************** */
+//    transaction PSRAM1_WRITE(UnsignedLong IN Address,UnsignedLong IN DATA) {
+//       define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive command{};  command = <0b01000100>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive data1{};    data1 = DATA[15..8];
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field drive data2{};    data2 = DATA[7..0];
+//            field drive ack4{};     ack4 = repeat("X",1);
+//            field drive stpRep1{};  stpRep1 = repeat("0",2);
+//            field drive stp{};      stp = <0b01>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta{};      sta = repeat("b",1);
+//            field drive clk{};      clk = repeat("0",36);
+//            field drive stpRep1{};  stpRep1 = repeat("a",2);
+//            field drive stp{};      stp = <0b11>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//    }
+//    transaction PSRAM1_READ (UnsignedLong IN Address, UnsignedLong OUT DATA) {
+//        define DATA {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive command1{}; command1 = <0b01000100>;
+//            field drive ack1{};     ack1 = repeat("X",1);
+//            field drive addr{};     addr = Address[7..0];
+//            field drive ack2{};     ack2 = repeat("X",1);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive command2{}; command2 = <0b01000101>;
+//            field drive ack3{};     ack3 = repeat("X",1);
+//            field receive data1{}; //TDC Topic 0803550092
+//            @Properties(captureMode = isOut(DATA)) data1 = DATA[0..7];
+//            field drive ack4{};     ack4 = repeat("0",1);
+//            field receive data2{};
+//            @Properties(captureMode = isOut(DATA)) data2 = DATA[8..15];
+//            field drive nack{};     nack = repeat("1",1);
+//            field drive stp{};      stp = <0b001>;
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        define CLK {
+//            field drive idle{};     idle = repeat("1", 2);
+//            field drive sta1{};     sta1 = repeat("b",1);
+//            field drive clk1{};     clk1 = repeat("0",18);
+//            field drive sta2{};     sta2 = repeat("b",1);
+//            field drive clk2{};     clk2 = repeat("0",27);
+//            field drive stpa{};     stpa = repeat("a",1);
+//            field drive stp{};      stp = repeat("1",2);
+//            field drive stpRep2{};  stpRep2 = repeat("1",10);
+//        }
+//        DATA=DATA.data1[0 .. 7] + DATA.data2[0 .. 7];
+//    }
+
+}

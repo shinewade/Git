@@ -1,0 +1,32 @@
+flow preBind {
+    setup {
+        suite Set_Version calls BT1502_pro_tml.Global.Set_Version{}
+
+        suite import_limit_table calls com.advantest.itee.testtable.testmethod.TestTableReader {
+            testTablePath = "testtable/BT1502_FT_V01.ods";
+            forceImport = true;
+            printToConsole = false;
+            createParameterGroups = true;
+        }
+
+        suite PassBinGrade calls besLib.generalTestMethod.PassBinGrade{
+            testTablePath = "testtable/BT1502_FT_V01.ods";
+            mainSheet= "Main_Tests";
+        }
+
+
+    }
+
+    execute {
+        println("----preBin Flow------");
+        println("");
+
+        Set_Version.execute();
+
+        import_limit_table.limitCategory = Set_Version.TT_Type;  // FT01|QA01
+        import_limit_table.logLevelCategory = Set_Version.TT_Type;
+        import_limit_table.execute();
+
+//        PassBinGrade.execute();
+    }
+}

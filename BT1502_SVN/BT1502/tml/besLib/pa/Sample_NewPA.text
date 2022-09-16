@@ -1,0 +1,137 @@
+package besLib.pa;
+
+import java.util.Map;
+
+import com.advantest.itee.tmapi.protocolaccess.IArrayParameter;
+import com.advantest.itee.tmapi.protocolaccess.ProtocolAccess;
+
+import besLib.pa.BesPA_I2C.BesI2cAddrType;
+import besLib.pa.BesPA_I2C.I2cRegAddrBits;
+import xoc.dsa.DeviceSetupFactory;
+import xoc.dsa.IDeviceSetup;
+import xoc.dsa.ISetupProtocolInterface;
+import xoc.dsa.ISetupTransactionSeqDef;
+import xoc.dsa.ISetupTransactionSeqDef.Direction;
+import xoc.dsa.ISetupTransactionSeqDef.Type;
+import xoc.dta.TestMethod;
+import xoc.dta.annotations.In;
+import xoc.dta.datatypes.MultiSiteLong;
+import xoc.dta.datatypes.MultiSiteLongArray;
+import xoc.dta.measurement.IMeasurement;
+import xoc.dta.resultaccess.IProtocolInterfaceResults;
+import xoc.dta.resultaccess.ITransactionSequenceResults;
+
+
+public class Sample_NewPA extends TestMethod {
+
+    @In public String spec_measurement;
+    @In public String spec_measurement_NewPA;
+    public IMeasurement measurement;
+    public IMeasurement measurement_NewPA;
+    public String trCallName;
+
+    @Override
+    public void setup()
+    {
+        /******************** PA (protocol aware) ***********************/
+        IDeviceSetup deviceSetup =DeviceSetupFactory.createInstance(bt2006_tml.Global.StaticFields.prog_name);
+        deviceSetup.importSpec(spec_measurement);
+
+        ISetupProtocolInterface paInterface = deviceSetup.addProtocolInterface("I2C_BES", "besLib.pa.I2C_8bit_BES");
+        paInterface.addSignalRole("DATA","I2C_SDA");
+        paInterface.addSignalRole("CLK", "I2C_SCL");
+        ISetupTransactionSeqDef transDigSrc= paInterface.addTransactionSequenceDef("TS_Setup1");
+        transDigSrc.addParameter(Type.UnsignedLong, Direction.OUT, "chipid");
+        transDigSrc.addTransaction("PMU_READ",0x0,"chipid");
+        deviceSetup.sequentialBegin();
+            trCallName = deviceSetup.transactionSequenceCall(transDigSrc);
+        deviceSetup.sequentialEnd();
+        measurement.setSetups(deviceSetup);
+
+
+        /********************* New PA (protocol access) *********************/
+        IDeviceSetup deviceSetup_NewPA =DeviceSetupFactory.createInstance(bt2006_tml.Global.StaticFields.prog_name);
+        deviceSetup_NewPA.importSpec(spec_measurement_NewPA);
+
+        //New object i2c instantiated from Class BesPA_I2C
+        BesPA_I2C i2c=new BesPA_I2C(deviceSetup_NewPA, measurement_NewPA, I2cRegAddrBits.RegAddr_8Bits);
+        //set signal map
+        i2c.setSignals("I2C_SCL", "I2C_SDA");
+
+        //operating sequence
+        deviceSetup_NewPA.sequentialBegin();
+
+            //generate new transaction A based on pattern mode
+            i2c.transactionSequenceBegin("transaction_A");
+                //PMU write
+                i2c.write(BesI2cAddrType.PMU, 0x46, 0xb0b0);
+                //PMU data dynamic write
+                i2c.Write(BesI2cAddrType.PMU, 0x46, "PMU_DynData1_0x46");
+                //PMU address & data dynamic write
+                i2c.Write(BesI2cAddrType.PMU, "PMU_DynAddr1", "PMU_DynData1");
+                //PMU read
+                i2c.read( BesI2cAddrType.PMU, 0x46, "PMU_Read1_0x46" );
+                //I2C wait 1 ms
+                i2c.waitTime(1000);
+                //PMU read one register address continuously
+                IArrayParameter conRead=i2c.createReadArrayParameter("PMU_Continuous_Read1_0x46");
+                for(int i=0;i<10;i++) {//read 10 times
+                    i2c.read(BesI2cAddrType.PMU, 0x46, conRead.indexOf(i));
+                }
+                //Digital write
+                i2c.write(BesI2cAddrType.DIGITAL, 0x40080004,0xf111111f);
+                //Digital read
+                i2c.read( BesI2cAddrType.DIGITAL, 0x40080004, "Digital_Read1_0x40080004");  //DIGITAL read
+            i2c.transactionSequenceEnd();
+
+            //generate new transaction B based on pattern mode
+            i2c.transactionSequenceBegin("transaction_B");
+                //ANA write
+                 i2c.write(BesI2cAddrType.ANA, 0x46,0x3456);
+                 //RF write
+                 i2c.write(BesI2cAddrType.RF, 0x46,0x2323);
+                 //ANA read
+                 i2c.read( BesI2cAddrType.ANA, 0x46, "ANA_Read1_0x46");
+                 //RF read
+                 i2c.read( BesI2cAddrType.RF, 0x46, "RF_Read1_0x46");
+            i2c.transactionSequenceEnd();
+        deviceSetup_NewPA.sequentialEnd();
+
+        //generate SSF
+        measurement_NewPA.setSetups(deviceSetup_NewPA);
+    }
+
+    @Override
+    public void execute ()
+    {
+        measurement.execute();
+        /******************** PA (protocol aware) ***********************/
+        IProtocolInterfaceResults paResult_BES = measurement.protocolInterface("I2C_BES").preserveResults();
+        ITransactionSequenceResults trseqResult_BES = paResult_BES.transactSeq(trCallName,0);
+        Map<String, MultiSiteLong> Reg_read_Result_BES = trseqResult_BES.getValueAsLong();
+        MultiSiteLong chipId = Reg_read_Result_BES.get("chipid");
+
+
+        /********************* New PA (protocol access) *********************/
+        //PMU address & data dynamic write
+        MultiSiteLong dynAddr2=new MultiSiteLong();
+        MultiSiteLong dynData2=new MultiSiteLong();
+        dynAddr2.set(1, 0x47);  //assume different address between site1 and site2
+        dynAddr2.set(2, 0x46);
+        dynData2.set(1, 0x1234);//assume different data between site1 and site2
+        dynData2.set(2, 0x4321);
+        ProtocolAccess.setDynamicData("PMU_DynAddr1", dynAddr2);
+        ProtocolAccess.setDynamicData("PMU_DynData1", dynData2);
+        ProtocolAccess.updateDynamicData(context, measurement_NewPA); //update data dynamiclly
+
+        //measurement_NewPA run
+        measurement_NewPA.execute();
+
+        //preserve & retrieve New PA results
+        com.advantest.itee.tmapi.protocolaccess.IProtocolInterfaceResults res=ProtocolAccess.preserveResults(measurement_NewPA);
+        MultiSiteLong PMU_Read1_0x46=res.getResult("PMU_Read1_0x46");
+        MultiSiteLong ANA_Read1_0x46=res.getResult("ANA_Read1_0x46");
+        MultiSiteLongArray PMU_Continuous_Read1_0x46=res.getArrayResult("PMU_Continuous_Read1_0x46");
+
+    }
+}

@@ -1,0 +1,377 @@
+package BT1502_pro_tml.AUDIO;
+
+import java.util.Map;
+
+import BT1502_pro_tml.Global.StaticFields;
+import besLib.cal.BesCalc_AUDIO;
+import xoc.dsa.DeviceSetupFactory;
+import xoc.dsa.IDeviceSetup;
+import xoc.dsa.ISetupAwg;
+import xoc.dsa.ISetupDigitizer;
+import xoc.dsa.ISetupDigitizer.IMeasureWaveform.IDigitalFilter.SetupFilterType;
+import xoc.dsa.ISetupDigitizer.IMeasureWaveform.SetupInputImpedance;
+import xoc.dsa.ISetupProtocolInterface;
+import xoc.dsa.ISetupTransactionSeqDef;
+import xoc.dsa.ISetupUtility;
+import xoc.dsa.ISetupWaveformSampleBased;
+import xoc.dta.TestMethod;
+import xoc.dta.annotations.In;
+import xoc.dta.datatypes.dsp.MultiSiteWaveDouble;
+import xoc.dta.datatypes.dsp.MultiSiteWaveDoubleArray;
+import xoc.dta.measurement.ILocalMeasurement;
+import xoc.dta.resultaccess.IDigitizerResults;
+import xoc.dta.testdescriptor.IParametricTestDescriptor;
+
+
+public class AUDIO_ADDA_1K_NOISE_FLOOR_TEST extends TestMethod {
+
+    @In public String spec_measurement;
+
+    @In public String input_mode;           //Dual_AWG : AWG1&AWG2 IN
+                                            //AWG1_IN  : Only AWG1 IN
+                                            //AWG2_IN  : Only AWG2 IN
+
+    @In public String lout_mode;            //LR : -> LOUT_L & LOUT_R OUT
+                                            //L  : -> LOUT_L OUT
+                                            //R  : -> LOUT_R OUT
+
+    @In public String loading_mode;         //NO :no loading;
+                                            //YES:loading;
+
+    @In public String mic_in_relay;
+
+    @In public double awgAmplitude;
+
+    @In public int RT_num = 0;
+
+    public ILocalMeasurement measurement;
+    public ILocalMeasurement measurement1;
+//    public IMeasurement measurement_relayOff;
+
+    public IParametricTestDescriptor    ptd_Audio_MIC_NOISE_VRMS_A_L,
+                                        ptd_Audio_MIC_NOISE_VRMS_A_R;
+
+    private String dgt_Ip = "DGT_LP";
+    private String dgt_Qp = "DGT_RP";
+    private String LOUT   = "DGT_LP+DGT_RP";
+    private String MIC    = "AWG1_P+AWG2_P";
+
+    private String AWG_Action1="AWG_Source";
+    private String DGT_Action1="DGT_Measure_Noise_Floor";
+
+    private double awgSampRate;
+//    private double awgAmplitude;
+    private double awgDcOffset;
+    private double awgBandWidth;
+    private double dgtInputRange;
+//    private double dgtDcOffset;
+    private double dgtSamplingRate;
+    private long   dgtNumOfSamples;
+    private double dgtLpfValue;
+    private double dgtCutOffFreq1;
+    private long   dgtNumFilterTap;
+
+    private long data_0x40300080;
+
+    @Override
+    public void setup() {
+
+        if(StaticFields.dev_name == "BGA4173")
+        {
+            input_mode  = "Dual_AWG";
+            lout_mode = "LR";
+        }
+        if(StaticFields.dev_name == "BGA7273")
+        {
+            input_mode  = "AWG1_IN";
+            lout_mode = "R";
+        }
+
+//        IDeviceSetup deviceSetup_relayOff = DeviceSetupFactory.createInstance(StaticFields.prog_name);
+//        deviceSetup_relayOff.addUtility("K1+K4+K5").setValue(0);
+//        measurement_relayOff.setSetups(deviceSetup_relayOff);
+
+
+
+        IDeviceSetup deviceSetup1=DeviceSetupFactory.createInstance(StaticFields.prog_name);
+        deviceSetup1.importSpec(spec_measurement);
+
+        ISetupProtocolInterface paInterface = deviceSetup1.addProtocolInterface("I2C_BES", "besLib.pa.I2C_8bit_BES");
+        paInterface.addSignalRole("DATA", "I2C_SDA");
+        paInterface.addSignalRole("CLK", "I2C_SCL");
+        ISetupTransactionSeqDef transDigSrc= paInterface.addTransactionSequenceDef("AUDIO_CURRENT_TEST");
+        if(StaticFields.dev_name == "BGA4173")
+        {
+            //    off     on
+            //K4:MIC13 / MIC4
+            //K5:MIC1  / MIC3
+            //K1:MIC25 / MIC6
+            //K3:MIC2  / MIC5
+            ISetupUtility uti1=deviceSetup1.addUtility("K1+K4").setValue(0);
+            uti1.setState("K1_K4_On") .setValue(1);//MIC46
+            uti1.setState("K1_K4_Off").setValue(0);//MIC1235
+            ISetupUtility uti2=deviceSetup1.addUtility("K3+K5").setValue(0);
+            uti2.setState("K3_K5_On") .setValue(1);//MIC35
+            uti2.setState("K3_K5_Off").setValue(0);//MIC12
+
+            if(mic_in_relay == "MIC12")
+            {
+                data_0x40300080 = 0x00443E7F;
+            }
+            else if(mic_in_relay == "MIC35")
+            {
+                data_0x40300080 = 0x01143E7F;
+            }
+            else if(mic_in_relay == "MIC46")
+            {
+                data_0x40300080 = 0x002a1f3f;
+            }
+        }
+
+        if(StaticFields.dev_name == "BGA7273")
+        {
+            //    off    on
+            //K18:MIC1 / 5
+            ISetupUtility uti1=deviceSetup1.addUtility("K18").setValue(0);
+            uti1.setState("K18_On") .setValue(1);//MIC5
+            uti1.setState("K18_Off").setValue(0);//MIC1
+
+            if(mic_in_relay == "MIC1")
+            {
+                data_0x40300080 = 0x0043e7f;
+            }
+            if(mic_in_relay == "MIC5")
+            {
+                data_0x40300080 = 0x01243e7f;
+            }
+        }
+
+
+        transDigSrc.addTransaction("DIGITAL_WRITE",0x40300080,data_0x40300080);//ana adcA -> dig adc_ch0
+        transDigSrc.addWait("10 ms");
+
+        deviceSetup1.sequentialBegin();
+            if(StaticFields.dev_name == "BGA4173")
+            {
+                deviceSetup1.actionCall("K1_K4_Off");
+                deviceSetup1.actionCall("K3_K5_Off");
+                if(mic_in_relay == "MIC35")
+                {
+                    deviceSetup1.actionCall("K3_K5_On");
+                }
+                if(mic_in_relay == "MIC46")
+                {
+                    deviceSetup1.actionCall("K1_K4_On");
+                }
+            }
+            if(StaticFields.dev_name == "BGA7273")
+            {
+                deviceSetup1.actionCall("K18_Off");
+                if(mic_in_relay == "MIC5")
+                {
+                    deviceSetup1.actionCall("K18_On");
+                }
+            }
+            deviceSetup1.transactionSequenceCall(transDigSrc);
+        deviceSetup1.sequentialEnd();
+        measurement1.setSetups(deviceSetup1);
+
+
+
+        IDeviceSetup deviceSetup =DeviceSetupFactory.createInstance(StaticFields.prog_name);
+        // BS
+        // Standard AWG setup for BS
+        awgSampRate      = 186.186*1e3;                  // [Hz]
+        awgDcOffset      = 0.0;
+        awgAmplitude     = 0.35;    //  0.4 0.25  0.38                // [V]
+        awgBandWidth     = 1*1e3;                     // [Hz]
+
+        // Standard DGT setup for BS
+        dgtInputRange    = 0.26;  //1.3                      // [V]
+//        dgtDcOffset      = 0.0;                         // [V]
+        dgtSamplingRate  = 93.093*1e3*8 ; //    89.5230138*1e3*8   // [Hz]98.4753719*1e3    93.093
+        dgtNumOfSamples  = 1024*8*4;
+        dgtLpfValue      = 30*1e3;                      // [Hz]
+        // DGT Digital Filter setup for BS
+        dgtCutOffFreq1   = 20*1e3;                      // [Hz] 30*1e3;
+        dgtNumFilterTap  = 32;
+
+        //waveform setup
+        ISetupWaveformSampleBased awg_wave=deviceSetup.addWaveformSampleBased("sinewave_1khz_AWG").setDataFile("waveforms/AUDIO_WAVE_1K_M_11_N_2048_AWG.cwf").setSampleRate(awgSampRate);
+        if(input_mode=="Dual_AWG")     {MIC = "AWG1_P+AWG2_P";}//MIC1&MIC2
+        else if(input_mode=="AWG1_IN") {MIC = "AWG_MIC1_P";       }//MIC1
+        else if(input_mode=="AWG2_IN") {MIC = "AWG2_P";      }//MIC2
+        else                         {MIC = "AWG1_P+AWG2_P";}//MIC1&MIC2
+
+        //dgt setupMIC
+        if(lout_mode == "LR")     {LOUT = "DGT_LP+DGT_RP";}//LOUT_L&LOUT_R
+        else if(lout_mode == "L") {LOUT = "DGT_LP";        }//LOUT_L
+        else if(lout_mode == "R") {LOUT = "DGT_RP";        }//LOUT_R
+        else                      {LOUT = "DGT_LP+DGT_RP";}//LOUT_L&LOUT_R
+
+        ISetupAwg awgSetup1=deviceSetup.addAwg(MIC).setConfigOptionDifferential().setConnect(true).setDisconnect(true);//.setKeepAlive(true);
+        awgSetup1.  sourceWaveform(AWG_Action1).
+                    setWaveform(awg_wave).
+                    setRepeatInfinite(true).
+                    setAmplitude(0.4).
+//                    setAmplitude(awgAmplitude).
+                    setOffset(awgDcOffset).
+//                    setOptimizationDistortion().
+                    setOptimizationNoiseFloor().
+                    setBandwidth(awgBandWidth);
+
+        ISetupDigitizer dgtSetup1=deviceSetup.addDigitizer(LOUT).setConfigOptionDifferential().setConnect(true).setDisconnect(true);
+        dgtSetup1.measureWaveform(DGT_Action1)
+                 .setSampleRate(dgtSamplingRate)
+                 .setExpectedAmplitude(dgtInputRange)
+//                 .setOffset(dgtDcOffset)
+                 .setSamples(dgtNumOfSamples)
+                 .setLowPassFilterBandwidth(dgtLpfValue)
+                 .setInputImpedance(SetupInputImpedance.HighZ)
+                 .digitalFilter()
+                 .setFilterType(SetupFilterType.lowPass)
+                 .setCutOffFrequency1(dgtCutOffFreq1)
+                 .setNumFilterTaps(dgtNumFilterTap);
+
+        deviceSetup.sequentialBegin();
+            deviceSetup.waitCall("15 ms");
+            deviceSetup.actionCall(DGT_Action1);
+        deviceSetup.sequentialEnd();
+        measurement.setSetups(deviceSetup);
+
+    }
+
+    @Override
+    public void execute() {
+
+        if(RT_num == 0)
+        {
+            measurement1.execute();
+        }
+
+//        MultiSiteWaveDouble waveform_L = new MultiSiteWaveDouble();
+//        MultiSiteWaveDouble waveform_R = new MultiSiteWaveDouble();
+        MultiSiteWaveDouble waveform_L_nf = new MultiSiteWaveDouble();
+        MultiSiteWaveDouble waveform_R_nf = new MultiSiteWaveDouble();
+//        MultiSiteLong num_pts =new MultiSiteLong();
+        measurement.execute();
+        IDigitizerResults resultsDgt = measurement.digitizer(LOUT).preserveResults();
+//        Map<String, MultiSiteWaveDoubleArray> waveforms = resultsDgt.measureWaveform(DGT_Action1).getWaveform();
+        Map<String, MultiSiteWaveDoubleArray> waveforms_nf = resultsDgt.measureWaveform(DGT_Action1).getWaveform();
+
+        if(lout_mode == "LR")
+        {
+//            waveform_L = waveforms.get(dgt_Ip).getElement(0);
+//            waveform_R = waveforms.get(dgt_Qp).getElement(0);
+            waveform_L_nf = waveforms_nf.get(dgt_Ip).getElement(0);
+            waveform_R_nf = waveforms_nf.get(dgt_Qp).getElement(0);
+        }
+        else if(lout_mode == "L")
+        {
+//            waveform_L = waveforms.get(dgt_Ip).getElement(0);
+//            waveform_R = waveforms.get(dgt_Ip).getElement(0);
+            waveform_L_nf = waveforms_nf.get(dgt_Ip).getElement(0);
+            waveform_R_nf = waveforms_nf.get(dgt_Ip).getElement(0);
+        }
+        else if(lout_mode == "R")
+        {
+//            waveform_L = waveforms.get(dgt_Qp).getElement(0);
+//            waveform_R = waveforms.get(dgt_Qp).getElement(0);
+            waveform_L_nf = waveforms_nf.get(dgt_Qp).getElement(0);
+            waveform_R_nf = waveforms_nf.get(dgt_Qp).getElement(0);
+        }
+
+//        num_pts = waveform_L.getSize().divide(2);
+//        int num_pts_int = (int)(num_pts.get(context.getActiveSites()[0]) + 0);
+//        MultiSiteWaveDouble waveform_P0_L = new MultiSiteWaveDouble(num_pts);
+//        MultiSiteWaveDouble waveform_P0_R = new MultiSiteWaveDouble(num_pts);
+//        for(int i=0;i<num_pts.get(context.getActiveSites()[0]);i++) {
+//            waveform_P0_L.setValue(i, (waveform_L.getValue(i).add(waveform_L.getValue(i+num_pts_int))).divide(2));
+//            waveform_P0_R.setValue(i, (waveform_R.getValue(i).add(waveform_R.getValue(i+num_pts_int))).divide(2));
+//        }
+//        waveform_P0_L.setSampleRate(waveform_L.getSampleRate());
+//        waveform_P0_R.setSampleRate(waveform_R.getSampleRate());
+
+        releaseTester();
+//        BesCalc_AUDIO AUDIO_ADDA_1K = new BesCalc_AUDIO(waveform_P0_L, waveform_P0_R);
+//        AUDIO_ADDA_1K.setSignalBinCount(7);
+//        AUDIO_ADDA_1K.setHarmonicBinCount(20);
+        BesCalc_AUDIO AUDIO_MIC_NF = new BesCalc_AUDIO(waveform_L_nf, waveform_R_nf);
+
+        if(lout_mode == "LR")
+        {
+//            ptd_Audio_MIC_SNR_L.evaluate(AUDIO_ADDA_1K.getSNR_L());
+//            ptd_Audio_MIC_THD_L.evaluate(AUDIO_ADDA_1K.getTHD_L());
+//            ptd_Audio_MIC_SNR_R.evaluate(AUDIO_ADDA_1K.getSNR_R());
+//            ptd_Audio_MIC_THD_R.evaluate(AUDIO_ADDA_1K.getTHD_R());
+//            ptd_Audio_MIC_PWR_L.evaluate(AUDIO_ADDA_1K.get1KPower_L_dBm());
+//            ptd_Audio_MIC_PWR_R.evaluate(AUDIO_ADDA_1K.get1KPower_R_dBm());
+            ptd_Audio_MIC_NOISE_VRMS_A_L.evaluate(AUDIO_MIC_NF.getNoiseFloor_A_L_uVrms());
+            ptd_Audio_MIC_NOISE_VRMS_A_R.evaluate(AUDIO_MIC_NF.getNoiseFloor_A_R_uVrms());
+        }
+        else if(lout_mode == "L")
+        {
+//            ptd_Audio_MIC_SNR_L.evaluate(AUDIO_ADDA_1K.getSNR_L());
+//            ptd_Audio_MIC_THD_L.evaluate(AUDIO_ADDA_1K.getTHD_L());
+//            ptd_Audio_MIC_PWR_L.evaluate(AUDIO_ADDA_1K.get1KPower_L_dBm());
+            ptd_Audio_MIC_NOISE_VRMS_A_L.evaluate(AUDIO_MIC_NF.getNoiseFloor_A_L_uVrms());
+        }
+        else if(lout_mode == "R")
+        {
+//            ptd_Audio_MIC_SNR_R.evaluate(AUDIO_ADDA_1K.getSNR_R());
+//            ptd_Audio_MIC_THD_R.evaluate(AUDIO_ADDA_1K.getTHD_R());
+//            ptd_Audio_MIC_PWR_R.evaluate(AUDIO_ADDA_1K.get1KPower_R_dBm());
+            ptd_Audio_MIC_NOISE_VRMS_A_R.evaluate(AUDIO_MIC_NF.getNoiseFloor_A_R_uVrms());
+        }
+
+        if(StaticFields.debugMode)//StaticFields.debugMode
+        {
+            String testSuiteName_Qualified=context.getTestSuiteName();
+            String testSuiteName=testSuiteName_Qualified.substring(1+testSuiteName_Qualified.lastIndexOf("."));
+            if(lout_mode == "LR")
+            {
+                println("**********"+testSuiteName+"**********");
+                waveform_L_nf.plot("ADDA_"+mic_in_relay+"_NF_waveform_L");
+                waveform_R_nf.plot("ADDA_"+mic_in_relay+"_NF_waveform_R");
+                AUDIO_MIC_NF.getSpectrum_L_dBm()  .plot("ADDA_"+mic_in_relay+"_NF_spectrum_L_dBm");
+                AUDIO_MIC_NF.getSpectrum_R_dBm()  .plot("ADDA_"+mic_in_relay+"_NF_spectrum_R_dBm");
+                AUDIO_MIC_NF.getSpectrum_A_L_dBm().plot("ADDA_"+mic_in_relay+"_NF_spectrum_A_L_dBm");
+                AUDIO_MIC_NF.getSpectrum_A_R_dBm().plot("ADDA_"+mic_in_relay+"_NF_spectrum_A_R_dBm");
+
+                println("NOSIE_A_L_uVrms = "+AUDIO_MIC_NF.getNoiseFloor_A_L_uVrms()+" uVrms");
+                println("NOSIE_A_R_uVrms = "+AUDIO_MIC_NF.getNoiseFloor_A_R_uVrms()+" uVrms");
+                println();
+            }
+            else if(lout_mode == "L")
+            {
+                println("**********"+testSuiteName+" (LOUT_L)**********");
+                waveform_L_nf.plot("ADDA_"+mic_in_relay+"_NF_waveform_L");
+                AUDIO_MIC_NF.getSpectrum_L_dBm()  .plot("ADDA_"+mic_in_relay+"_NF_spectrum_L_dBm");
+                AUDIO_MIC_NF.getSpectrum_A_L_dBm().plot("ADDA_"+mic_in_relay+"_NF_spectrum_A_L_dBm");
+
+                println("NOSIE_A_L_uVrms = "+AUDIO_MIC_NF.getNoiseFloor_A_L_uVrms()+" uVrms");
+                println();
+            }
+            else if(lout_mode == "R")
+            {
+                println("**********"+testSuiteName+" (LOUT_R)**********");
+                waveform_R_nf.plot("ADDA_"+mic_in_relay+"_NF_waveform_R");
+                AUDIO_MIC_NF.getSpectrum_R_dBm()  .plot("ADDA_"+mic_in_relay+"_NF_spectrum_R_dBm");
+                AUDIO_MIC_NF.getSpectrum_A_R_dBm().plot("ADDA_"+mic_in_relay+"_NF_spectrum_A_R_dBm");
+
+                println("NOSIE_A_R_uVrms = "+AUDIO_MIC_NF.getNoiseFloor_A_R_uVrms()+" uVrms");
+                println();
+            }
+        }
+
+//        measurement_relayOff.execute();
+    }
+}
+//Vp   = Vpp / 2
+//Vrms = Vp / 1.414
+//dBV  = 20 * log(Vrms)
+//dBu  = 20 * log(Vrms / 0.7746)
+//W    = (Vrms * Rdbmref / (Rzout + Rdbmref))2 / Rwref
+//dBm  = 10 * log((Vrms * Rdbref / (Rzout + Rdbmref))2 * 1000 / Rdbmref
+//dBr  = dBV - 20 * log(Vdbrref)
+

@@ -1,0 +1,166 @@
+flow BT_GRP {
+    setup {
+        suite RESET_RESETN calls BT1502_pro_tml.FUNC.RESET_RESETN {
+           spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+        suite UART_INIT calls BT1502_pro_tml.FUNC.UART_INIT{
+           spec_measurement = setupRef(mainSpecs.Spec_I2C);
+           spec_measurement_UART = setupRef(mainSpecs.Spec_UART);
+        }
+        suite DCDC_PowerOn calls BT1502_pro_tml.DC.DCDC_PowerOn_2700 {
+           spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_Current calls BT1502_pro_tml.BT.BT_TX_Current {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_CapDelay calls BT1502_pro_tml.BT.BT_TX_DlyCap_Cal {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_LOFreq_L_mode calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2402;
+        }
+
+        suite BT_TX_LOFreq_L calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2402;
+        }
+
+        suite BT_TX_LOFreq_L_After_PWR_Cal calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2402;
+        }
+
+        suite BT_TX_LOFreq_M_mode calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2441;
+        }
+
+        suite BT_TX_LOFreq_M calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2441;
+        }
+
+        suite BT_TX_LOFreq_M_After_PWR_Cal calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2441;
+        }
+
+        suite BT_TX_LOFreq_H_mode calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2480;
+        }
+
+        suite BT_TX_LOFreq_H calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2480;
+        }
+
+        suite BT_TX_LOFreq_H_After_PWR_Cal calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2480;
+        }
+
+        suite BT_TX_PWR_Diff calls BT1502_pro_tml.BT.BT_TX_PWR_Diff {}
+
+        suite BT_TX_PWR_Cal calls BT1502_pro_tml.BT.BT_TX_PWR_Cal {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_ACP_Mode calls BT1502_pro_tml.BT.BT_TX_ACP_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_20dB_BW_ACP calls BT1502_pro_tml.BT.BT_TX_20dB_BW_ACP {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_ModChar_DF1_Mode calls BT1502_pro_tml.BT.BT_TX_ModChar_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            modChar_Mode= "df1"; //df1, df2
+        }
+
+        suite BT_TX_ModChar_DF1 calls BT1502_pro_tml.BT.BT_TX_ModChar_DF1 {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_ModChar_DF2_Mode calls BT1502_pro_tml.BT.BT_TX_ModChar_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            modChar_Mode= "df2"; //df1, df2
+        }
+
+        suite BT_TX_ModChar_DF2 calls BT1502_pro_tml.BT.BT_TX_ModChar_DF2 {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_ModChar_DF2_R1 calls BT1502_pro_tml.BT.BT_TX_ModChar_DF2 {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        }
+
+        suite BT_TX_LO_GB_Low_Mode calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2392;
+        }
+
+        suite BT_TX_LO_GB_Low calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn  {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2392;
+        }
+
+        suite BT_TX_LO_GB_High_Mode calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn_Mode {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2490;
+        }
+
+        suite BT_TX_LO_GB_High calls BT1502_pro_tml.BT.BT_TX_LOFreq_Dyn {
+            spec_measurement = setupRef(mainSpecs.Spec_I2C);
+            freq = 2490;
+        }
+         suite read_allreg calls BT1502_pro_tml.DC.read_all_register {
+        spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+
+        flow BT_RX_GRP calls testflows.FT.BT_RX_GRP{}
+    }
+    execute{
+        RESET_RESETN.execute();
+        DCDC_PowerOn.execute();
+        BT_TX_Current.execute();
+//        BT_TX_CapDelay.execute();
+        BT_TX_LOFreq_L_mode.execute();
+        BT_TX_LOFreq_L.execute();
+        BT_TX_LOFreq_M_mode.execute();
+        BT_TX_LOFreq_M.execute();
+        BT_TX_LOFreq_H_mode.execute();
+        BT_TX_LOFreq_H.execute();
+        BT_TX_PWR_Diff.execute();
+//        BT_TX_PWR_Cal.execute();
+//        BT_TX_LOFreq_L_mode.execute();
+//        BT_TX_LOFreq_L_After_PWR_Cal.execute();
+//        BT_TX_LOFreq_M_mode.execute();
+//        BT_TX_LOFreq_M_After_PWR_Cal.execute();
+//        BT_TX_LOFreq_H_mode.execute();
+//        BT_TX_LOFreq_H_After_PWR_Cal.execute();
+
+//        BT_TX_ACP_Mode.execute();
+//        BT_TX_20dB_BW_ACP.execute();
+//
+        BT_TX_ModChar_DF1_Mode.execute();
+        BT_TX_ModChar_DF1.execute();
+
+        BT_TX_ModChar_DF2_Mode.execute();
+        BT_TX_ModChar_DF2.execute();
+
+        BT_TX_LO_GB_Low_Mode.execute();
+        BT_TX_LO_GB_Low.execute();
+        BT_TX_LO_GB_High_Mode.execute();
+        BT_TX_LO_GB_High.execute();
+
+        BT_RX_GRP.execute();
+
+    }
+}
+

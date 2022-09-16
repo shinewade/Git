@@ -1,0 +1,68 @@
+protocol UART_BES {
+
+    mapping = drv[state0="0", state1="1"],
+              rcv[state0="L", state1="H",capture="C", ignore="X"];
+
+    //signal roles
+    signalRole RXD{
+        idleSequence = "1";
+    }
+    signalRole TXD{
+        idleSequence = "1";
+    }
+
+    transaction waitUart(UnsignedLong IN Cycles){
+       define RXD{
+           field drive idle {};
+           idle = repeat("1", Cycles);
+       }
+       define TXD{
+           field drive idle {};
+           idle = repeat("1", Cycles);
+       }
+   }
+
+    transaction writeUart (UnsignedLong IN Data) {
+        define RXD {
+            field drive idle{};
+            idle = repeat("1", 1);
+            field drive startBit{};
+            startBit = repeat("0", 1); //"0" for write, "1" for read;
+
+            field drive writeData0{};
+            writeData0 = repeat(Data[0],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData1{};
+            writeData1 = repeat(Data[1],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData2{};
+            writeData2 = repeat(Data[2],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData3{};
+            writeData3 = repeat(Data[3],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData4{};
+            writeData4 = repeat(Data[4],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData5{};
+            writeData5 = repeat(Data[5],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData6{};
+            writeData6 = repeat(Data[6],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive writeData7{};
+            writeData7 = repeat(Data[7],1); //8 data bits of data type UnsignedLong (of max 64 bits) with MSB (bit 15)...LSB (bin 0)
+
+            field drive stopBit{};
+            stopBit = repeat("1", 1);
+
+            field drive end {};
+            end = repeat("1", 1);
+
+        }
+        define TXD {
+            field drive idle{};
+            idle = repeat("1", 12);
+        }
+    }
+}

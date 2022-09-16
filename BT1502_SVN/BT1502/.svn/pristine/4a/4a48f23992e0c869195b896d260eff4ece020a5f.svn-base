@@ -1,0 +1,35 @@
+flow PMU_GRP {
+  setup {
+    suite RESET_RESETN calls BT1502_pro_tml.FUNC.RESET_RESETN {
+
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite UART_INIT calls BT1502_pro_tml.FUNC.UART_INIT{
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      spec_measurement_UART = setupRef(mainSpecs.Spec_UART);
+    }
+    suite LDO calls BT1502_pro_tml.DC.LDO_TEST {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite LDO_CAL calls BT1502_pro_tml.DC.LDO_CAL {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite DCDC_Buck calls BT1502_pro_tml.DC.DCDC_Buck{
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite DCDC_CAL calls BT1502_pro_tml.DC.DCDC_CAL {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+  }
+  execute {
+    RESET_RESETN.execute();
+    UART_INIT.execute();
+    LDO.execute();
+
+    RESET_RESETN.execute();
+    UART_INIT.execute();
+    DCDC_Buck.execute();
+    DCDC_CAL.execute();
+
+  }
+}

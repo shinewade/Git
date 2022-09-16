@@ -1,0 +1,110 @@
+flow EFFUSE_GRP {
+  setup {
+    //****************************NOTE****************************//
+    //EFUSE 0/1/2/5/6 is disable(reserved for software.)
+    //EFUSE 11/12     is disable(reserved for reading cp xy/ID info.)
+    //****************************NOTE****************************//
+    suite RESET_RESETN calls BT1502_pro_tml.FUNC.RESET_RESETN {
+
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite UART_INIT calls BT1502_pro_tml.FUNC.UART_INIT {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      spec_measurement_UART = setupRef(mainSpecs.Spec_UART);
+    }
+    suite EFFUSE_WR_3 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 3;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_4 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 4;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_5 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 5;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_7 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 7;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_8 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 8;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_9 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 9;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_A calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 10;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_B calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 11;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_D calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 13;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_E calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 14;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_F calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 15;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_0 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 0;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_1 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 1;
+      isEfuse = true;
+    }
+    suite EFFUSE_WR_1_R1 calls BT1502_pro_tml.EFFUSE.BesEfuse {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      efuseAddr = 1;
+      isEfuse = true;
+    }
+  }
+  execute {
+
+    RESET_RESETN.execute();
+    EFFUSE_WR_3.execute();
+    if(EFFUSE_WR_3.pass==false) {stop();}
+
+    EFFUSE_WR_4.execute();
+    if(EFFUSE_WR_4.pass==false) {stop();}
+
+    EFFUSE_WR_8.execute();
+    if(EFFUSE_WR_8.pass==false) {stop();}
+
+    EFFUSE_WR_7.execute();
+    if(EFFUSE_WR_7.pass==false) {stop();}
+
+    EFFUSE_WR_1.suppressBinning=true;
+    EFFUSE_WR_1.execute();
+    if(EFFUSE_WR_1.pass) { }
+    else {
+      UART_INIT.execute();
+      EFFUSE_WR_1_R1.execute();
+    }
+
+  }
+}

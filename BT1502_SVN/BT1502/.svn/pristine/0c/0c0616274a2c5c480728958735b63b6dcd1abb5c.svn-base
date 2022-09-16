@@ -1,0 +1,48 @@
+flow BT1502_CON {
+  setup {
+    suite CONT_NEG_TEST calls BT1502_pro_tml.DC.Continuity_walking_z {
+        spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+    suite CONT_NEG_TEST_PMU calls BT1502_pro_tml.DC.Continuity_PMU {
+    }
+    suite CONT_NEG_TEST_post calls BT1502_pro_tml.DC.Continuity_walking_z {
+      spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+
+    suite AlarmChecker    calls BT1502_pro_tml.Global.AlarmChecker{}
+    suite DISCHARGE_POST calls BT1502_pro_tml.DC.Discharge {
+      spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+
+
+
+    suite UART_INIT calls BT1502_pro_tml.FUNC.UART_INIT{
+        spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        spec_measurement_UART = setupRef(mainSpecs.Spec_UART);
+    }
+  }
+  execute {
+
+    CONT_NEG_TEST.suppressBinning=true;
+    CONT_NEG_TEST.execute();
+    if(CONT_NEG_TEST.pass==false)
+    {
+        CONT_NEG_TEST_PMU.execute();
+        if (CONT_NEG_TEST_PMU.pass!=true) {stop();}
+    }
+
+    AlarmChecker.execute();
+    if(AlarmChecker.pass!=true)
+    {
+        DISCHARGE_POST.execute();
+        stop();
+    }
+    else
+    {
+
+        DISCHARGE_POST.execute();
+    }
+    addBin(1);
+
+  }
+}

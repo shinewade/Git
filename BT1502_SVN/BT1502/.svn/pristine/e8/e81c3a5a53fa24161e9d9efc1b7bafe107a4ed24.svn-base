@@ -1,0 +1,29 @@
+flow preRun {
+
+    setup {
+        suite LB_Checker calls besLib.generalTestMethod.Read_LB_ID {
+            Write_BoardID=false;
+            BoardID = "001";          // Board ID 1~8
+        }
+        suite Init calls BT1502_pro_tml.Global.Init_variables {}
+    }
+
+
+    execute {
+        testProgramVariables.set("Is_FirstRun",false);
+        if(testProgramVariables.getBoolean("Is_FirstRun") == false)
+        {
+            LB_Checker.execute();
+            if(!LB_Checker.pass) {stop();}
+            testProgramVariables.set("Is_FirstRun",true);
+        }
+        else
+        {
+            println("*******************");
+            println("Flow PreRun Skipped");
+            println("*******************");
+            println("");
+        }
+        Init.execute();
+    }
+}

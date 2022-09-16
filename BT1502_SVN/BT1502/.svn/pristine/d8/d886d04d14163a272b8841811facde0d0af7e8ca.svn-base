@@ -1,0 +1,47 @@
+testprogram BES2700IBP_8X5D_FT_V02 {
+  dutboard = configuration.BT1502_BGA_83115A;
+  utilityLinesPerBlock = 16;
+
+  ignoredsites = 1,2,3,4,8;
+
+  // variables definition;
+  var DEV_NAME      = "BGA7273";        //Package type
+  var LB_NAME       = "BGA7273_8_SITE"; //Load Board type
+  var DEV_SSV       = "A";              //Bonding Vision
+  var DEV_SUB       = "A01";            //Device ID
+  var DEV_SUB_EXT   = "A";              //PID extend name
+  var DEV_VER       = "A";              //Wafer Vision
+  var DEV_VER_B     = "BT1502";
+  var EFFUSE_A1     = "N" ;             //Effuse address 1 written:Y/N
+  var FLASH_TYPE    = "GD64M4L_LQ";
+  var FLASH_TYPE_B  = "NA";
+  var FTQA          = "FT";             //FT or QA
+  var NFMI_PKG      = "TYPE1_RX";
+  var PMIC_NAME     = "BT1806";
+  var PMIC_VER      = "E";
+  var PSRAM_TYPE    = "AP32M";
+  var PSRAM_TYPE_B  = "AP64ML";
+  var VCORE_V       = "V070";
+  var VANA_V        = "V125";
+  var VCODEC_V      = "V165";
+  var CHARGER       = "N";
+  var MIC1          = "Y";
+  var MIC2          = "N";
+  var MIC3          = "N";
+  var MIC4          = "N";
+  var MIC5          = "Y";
+  var MIC6          = "N";
+  var PROG_NAME     = "BES2700IBP_FT";  //DSA path, modified per test program
+  var Is_FirstRun   =  false ;
+  var releaseTesterEnable =  true;
+
+  testflow PreBind {
+    flow = testflows.preBind;
+  }
+  testflow PreRun {
+    flow = testflows.preRun;
+  }
+  testflow Main {
+    flow = testflows.FT.BT1502_FT;
+  }
+}

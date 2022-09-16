@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Demodulation type="uidefaultdisplay">
+    <ModulationStandard name="Aclr" facade="AclrFacade">
+        <ParameterList type="Input">
+            <Parameter name="ModStandard"/>
+            <Parameter name="NumAverages"/>
+        </ParameterList>
+        <ParameterList type="Result">
+            <Parameter name="CarrierPower"/>
+            <Parameter name="ChannelPowersRelative"/>
+            <Parameter name="UsedCarrierBandwidth"/>
+            <Parameter name="UsedChannelBandwidths"/>
+            <Parameter name="UsedChannelOffsets"/>
+        </ParameterList>
+        <GraphList>
+            <Graph name="AclrSpectrum"/>
+        </GraphList>
+    </ModulationStandard>
+</Demodulation>

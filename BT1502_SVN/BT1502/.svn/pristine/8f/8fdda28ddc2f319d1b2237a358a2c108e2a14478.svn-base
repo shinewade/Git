@@ -1,0 +1,188 @@
+package BT1502_pro_tml.BT;
+
+import BT1502_pro_tml.Global.StaticFields;
+import besLib.dsa.BesDsa_PMIC;
+import besLib.dsa.BesDsa_PMIC.V93K_Resource;
+import besLib.pa.BesPA_I2C;
+import besLib.pa.BesPA_I2C.BesI2cAddrType;
+import besLib.pa.BesPA_I2C.I2cRegAddrBits;
+import xoc.dsa.DeviceSetupFactory;
+import xoc.dsa.IDeviceSetup;
+import xoc.dsa.ISetupDcVI;
+import xoc.dta.TestMethod;
+import xoc.dta.annotations.In;
+import xoc.dta.datatypes.MultiSiteDouble;
+import xoc.dta.measurement.ILocalMeasurement;
+import xoc.dta.resultaccess.IDcVIResults;
+import xoc.dta.testdescriptor.IParametricTestDescriptor;
+
+public class BT_RX_Current extends TestMethod {
+
+    @In public String spec_measurement;
+
+    public ILocalMeasurement measurement;
+    public IParametricTestDescriptor    ptd_I_Vbat_BTRX;
+
+    @Override
+    public void setup() {
+
+        IDeviceSetup ds1 =DeviceSetupFactory.createInstance(StaticFields.prog_name);
+        ds1.importSpec(spec_measurement);
+
+        ds1.addUtility("K7").setValue(1);
+
+        // VBAT
+        ISetupDcVI dcVi_VBAT = ds1.addDcVI("VSYS").setDisconnect(false);
+        dcVi_VBAT.imeas("Im_VBAT").setUngangModeFast().setIrange("150 mA").setAverages(16).setRestoreIrange(true);
+        // VANA
+        new BesDsa_PMIC(ds1).vMeas_DcVI_Hiz("VANA", true, "Vm_VANA", V93K_Resource.DPS128);
+
+        BesPA_I2C i2c=new BesPA_I2C(ds1, measurement, I2cRegAddrBits.RegAddr_8Bits);
+        i2c.setSignals("I2C_SCL", "I2C_SDA");
+
+        i2c.transactionSequenceBegin("BT_RX_CURRENT");
+//      //[addaloop]
+//      i2c.write(BesI2cAddrType.RF,0x51,0x27ff);//lna hg
+//      i2c.write(BesI2cAddrType.RF,0xbf,0x3002);//lna ic
+//      i2c.write(BesI2cAddrType.RF,0xce,0x00b5);//lna_ldo
+//      i2c.write(BesI2cAddrType.RF,0x2c,0x261F);// i2v max gain
+//      i2c.write(BesI2cAddrType.RF,0x28,0xbe10);//i2v_corner
+//      i2c.write(BesI2cAddrType.RF,0x2b,0x0f00);//flt max gain
+//      i2c.write(BesI2cAddrType.RF,0x27,0x1e04);//flt bw
+//      i2c.write(BesI2cAddrType.RF,0x81,0x0009);//i2v rin
+//      i2c.write(BesI2cAddrType.RF,0x4a,0x0000);//zero if
+//      i2c.write(BesI2cAddrType.RF,0x0f,0x0001);//pa pd
+//      i2c.write(BesI2cAddrType.RF,0x11,0x4040);//pad pd
+//      i2c.write(BesI2cAddrType.RF,0x91,0x8608);//txflt tst en
+//      i2c.write(BesI2cAddrType.RF,0xa6,0x1eea);
+//      i2c.write(BesI2cAddrType.RF,0x95,0x0032);
+//      i2c.waitTime(10e6);
+//
+////      [core init nansu] add in 20220127
+//      i2c.write(BesI2cAddrType.DIGITAL,0x40085038,0xCAFE0000);
+//      i2c.write(BesI2cAddrType.DIGITAL,0x400800CC,0x000000DD);
+//      i2c.write(BesI2cAddrType.DIGITAL,0x40080004,0x13e8018c);
+//      i2c.write(BesI2cAddrType.DIGITAL,0x4008004C,0x048C151F);
+//      //[ss] TBD RT
+//      i2c.waitTime(10e6);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xD0350214,0x00000000);
+//      i2c.waitTime(10e6);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xD0350214,0x00000000);
+//      i2c.waitTime(10e6);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xD0350214,0x00000000);
+//      i2c.waitTime(40e6);
+//      //[adda loop back]
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350218,0x00000013);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350254,0x0000000A);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350024,0x0000000B);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350028,0x00800000);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350244,0x175E0000);
+//      i2c.write(BesI2cAddrType.DIGITAL,0xd0350240,0x0000A825);
+
+//        [kong bin]
+        i2c.write(BesI2cAddrType.RF,0x55,0x0000);
+        i2c.write(BesI2cAddrType.RF,0x5c,0xa1b0);
+        i2c.write(BesI2cAddrType.RF,0x5d,0x0c34);
+        i2c.write(BesI2cAddrType.RF,0x9c,0x0041);
+        i2c.write(BesI2cAddrType.RF,0x9d,0x0404);
+        i2c.write(BesI2cAddrType.RF,0x9f,0x0100);
+        i2c.write(BesI2cAddrType.RF,0xa0,0x1908);
+        i2c.write(BesI2cAddrType.RF,0xa2,0x468c);
+        i2c.write(BesI2cAddrType.RF,0xc4,0x3c81);
+        i2c.write(BesI2cAddrType.RF,0x00,0xa010);
+        i2c.write(BesI2cAddrType.RF,0x18,0x000f);//0705: 0x000d -> 0x000f
+        i2c.write(BesI2cAddrType.RF,0x48,0x0041);
+        i2c.write(BesI2cAddrType.RF,0x00,0xa000);
+
+//        [addaloop]
+        i2c.write(BesI2cAddrType.RF,0x51,0x27ff);//lna hg
+        i2c.write(BesI2cAddrType.RF,0xbf,0x3002);//lna ic
+        i2c.write(BesI2cAddrType.RF,0xce,0x00b5);//lna_ldo
+        i2c.write(BesI2cAddrType.RF,0x2c,0x26f7);// i2v max gain    20220707 261f -> 26f7
+        i2c.write(BesI2cAddrType.RF,0x28,0xbe10);//i2v_corner
+        i2c.write(BesI2cAddrType.RF,0x2b,0x0900);//flt max gain
+        i2c.write(BesI2cAddrType.RF,0x27,0x7604);//flt bw        20220707 1e04 -> 7604
+        i2c.write(BesI2cAddrType.RF,0x81,0x0009);//i2v rin
+        i2c.write(BesI2cAddrType.RF,0x4a,0x0000);//zero if
+        i2c.write(BesI2cAddrType.RF,0x0f,0x0001);//pa pd
+        i2c.write(BesI2cAddrType.RF,0x11,0x4040);//pad pd
+        i2c.write(BesI2cAddrType.RF,0x91,0x8608);//txflt tst en
+        i2c.write(BesI2cAddrType.RF,0xa6,0x5eea);//0x1eea adda 0x1e6a filter  20220707 1eea -> 5eea
+        i2c.write(BesI2cAddrType.RF,0x95,0x0032);
+        i2c.waitTime(10e6);
+
+//            //[addaloop]
+//            i2c.write(BesI2cAddrType.RF,0x0051,0x27ff);//lna hg
+//            i2c.write(BesI2cAddrType.RF,0x00bf,0x3002);//lna ic
+//            i2c.write(BesI2cAddrType.RF,0x00ce,0x00b5);//lna_ldo
+//            i2c.write(BesI2cAddrType.RF,0x002c,0x261F);// i2v max gain
+//            i2c.write(BesI2cAddrType.RF,0x0028,0xbe10);//i2v_corner
+//            i2c.write(BesI2cAddrType.RF,0x002b,0x0f00);//flt max gain
+//            i2c.write(BesI2cAddrType.RF,0x0027,0x1e04);//flt bw
+//            i2c.write(BesI2cAddrType.RF,0x0081,0x0009);//i2v rin
+//            i2c.write(BesI2cAddrType.RF,0x004a,0x0000);//zero if
+//            i2c.write(BesI2cAddrType.RF,0x000f,0x0001);//pa pd
+//            i2c.write(BesI2cAddrType.RF,0x0011,0x4040);//pad pd
+//            i2c.write(BesI2cAddrType.RF,0x0091,0x8608);//txflt tst en
+//            i2c.write(BesI2cAddrType.RF,0x0027,0x7604);
+//    //        i2c.write(BesI2cAddrType.RF,0x00,0xa010);
+//            i2c.write(BesI2cAddrType.RF,0x0144,0x5025);
+//            i2c.write(BesI2cAddrType.RF,0x0146,0x401b);
+//    //        i2c.write(BesI2cAddrType.RF,0x00,0xa000);
+//            i2c.write(BesI2cAddrType.RF,0x00a6,0x1eea);
+//            i2c.write(BesI2cAddrType.RF,0x0095,0x0032);
+//            i2c.waitTime(1000e6);
+
+            //[core init nansu]
+            i2c.write(BesI2cAddrType.DIGITAL,0x40085038,0xCAFE0000);
+            i2c.write(BesI2cAddrType.DIGITAL,0x400800CC,0x000000DD);
+            i2c.write(BesI2cAddrType.DIGITAL,0x40080004,0x13e8018c);
+            i2c.write(BesI2cAddrType.DIGITAL,0x4008004C,0x048C151F);
+            i2c.waitTime(10e6);
+    //        //[ss]
+            i2c.write(BesI2cAddrType.DIGITAL,0xD0350214,0x00000000);
+            i2c.waitTime(10e6);
+
+            //[adda loop back]
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350218,0x00000013);
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350254,0x0000000A);
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350024,0x0000000B);
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350028,0x00800000);
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350244,0x175E0000);
+            i2c.write(BesI2cAddrType.DIGITAL,0xd0350240,0x0000A825);
+            i2c.waitTime(10e6);
+        i2c.transactionSequenceEnd();
+
+        ds1.waitCall("50 ms");
+        ds1.actionCall("Im_VBAT");
+//        ds1.actionCall("Vm_VANA");
+
+        measurement.setSetups(ds1);
+    }
+
+
+    @Override
+    public void execute() {
+//        MultiSiteLong cal_write = new MultiSiteLong();
+//        cal_write.set(StaticFields.lBt_CalValue_0x28.leftShift(6).add(0x1428));
+//
+//        ProtocolAccess.setDynamicData("dnyWrite_0x9e", cal_write);
+//        ProtocolAccess.updateDynamicData(context, measurement);
+        measurement.execute();
+
+        IDcVIResults res_DcVI=measurement.dcVI().preserveResults();
+//        MultiSiteDouble VANA_org_vol = res_DcVI.vmeas("Vm_VANA").getVoltage("VANA").getElement(0);
+        MultiSiteDouble I_Vbat_BTRX=res_DcVI.imeas("Im_VBAT").getCurrent("VSYS").getElement(0);
+        if(StaticFields.debugMode)
+        {
+            String testSuiteName_Qualified=context.getTestSuiteName();
+            String testSuiteName=testSuiteName_Qualified.substring(1+testSuiteName_Qualified.lastIndexOf("."));
+            println("**********"+testSuiteName+"**********");
+            println("I_Vbat_BTRX = "+I_Vbat_BTRX.multiply(1e3));
+//            println("DC_VANA_nold      [V]  = "+VANA_org_vol);
+            println();
+        }
+        ptd_I_Vbat_BTRX.evaluate(I_Vbat_BTRX);
+    }
+
+}

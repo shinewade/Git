@@ -1,0 +1,83 @@
+flow BT1502_FT {
+  setup {
+    suite CONT_NEG_TEST calls BT1502_pro_tml.DC.Continuity_walking_z {
+        spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+    suite CONT_NEG_TEST_PMU calls BT1502_pro_tml.DC.Continuity_PMU {
+    }
+    suite CONT_NEG_TEST_post calls BT1502_pro_tml.DC.Continuity_walking_z {
+      spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+    suite VBAT_on_Test calls BT1502_pro_tml.DC.VBAT_on_Test {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+      spec_measurement_POWKEY_High= setupRef(mainSpecs.Spec_I2C_POWKEY_High);
+    }
+    suite Power_on_Test calls BT1502_pro_tml.DC.Power_on_Test {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite CHIPID calls BT1502_pro_tml.DC.CHIPID {
+        spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    suite Freq_24M_On calls BT1502_pro_tml.FUNC.LPO_freq_24M_on_test {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+    flow PMU_GRP calls testflows.FT.PMU_GRP { }
+    flow DFT_GRP calls testflows.FT.DFT_GRP { }
+    flow BT_GRP calls testflows.FT.BT_GRP { }
+    flow AU_GRP calls testflows.FT.AU_GRP { }
+    flow OTHER_GRP calls testflows.FT.OTHER_GRP { }
+    flow EFFUSE_GRP calls testflows.FT.EFFUSE_GRP { }
+    suite AlarmChecker    calls BT1502_pro_tml.Global.AlarmChecker{}
+    suite DISCHARGE_POST calls BT1502_pro_tml.DC.Discharge {
+      spec_measurement = setupRef(mainSpecs.Spec_OS);
+    }
+
+    suite LDO_meas calls BT1502_pro_tml.DC.LDO_meas {}
+    suite read_allreg calls BT1502_pro_tml.DC.read_all_register {
+      spec_measurement = setupRef(mainSpecs.Spec_I2C);
+    }
+
+    suite UART_INIT calls BT1502_pro_tml.FUNC.UART_INIT{
+        spec_measurement = setupRef(mainSpecs.Spec_I2C);
+        spec_measurement_UART = setupRef(mainSpecs.Spec_UART);
+    }
+    suite SETFLAG_PASSB calls BT1502_pro_tml.Global.SETFLAG_PASSB {
+
+    }
+  }
+  execute {
+
+    CONT_NEG_TEST.suppressBinning=true;
+    CONT_NEG_TEST.execute();
+    if(CONT_NEG_TEST.pass==false)
+    {
+        CONT_NEG_TEST_PMU.execute();
+        if (CONT_NEG_TEST_PMU.pass!=true) {stop();}
+    }
+    VBAT_on_Test.execute();
+//    if (VBAT_on_Test.pass!=true) {stop();}
+    Power_on_Test.execute();
+//    if (Power_on_Test.pass!=true) {stop();}
+
+    CHIPID.execute();
+    PMU_GRP.execute();
+    DFT_GRP.execute();
+    BT_GRP.execute();
+    AU_GRP.execute();
+    OTHER_GRP.execute();
+    AlarmChecker.execute();
+    if(AlarmChecker.pass!=true)
+    {
+        DISCHARGE_POST.execute();
+        stop();
+    }
+    else
+    {
+        EFFUSE_GRP.execute();
+        DISCHARGE_POST.execute();
+    }
+
+    addBin(1);
+
+  }
+}
